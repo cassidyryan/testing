@@ -2,170 +2,194 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--navy:#003873;--blue:#0253B6;--bright:#0A6FE8;--orange:#F47F46;--teal:#08C5A2;--bdr:#d0e8f5}
-.wrap{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:20px;display:flex;justify-content:center}
-.modal{background:var(--color-background-primary);border-radius:8px;width:100%;max-width:580px;border:0.5px solid var(--color-border-tertiary);overflow:hidden}
-.mhead{background:var(--navy);padding:14px 18px;display:flex;justify-content:space-between;align-items:flex-start}
-.mhead-left .eyebrow{font-size:9.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:3px;font-family:'Poppins',sans-serif}
-.mhead-left .title{font-size:14.5px;font-weight:500;color:#fff;font-family:'Poppins',sans-serif}
-.mclose{background:rgba(255,255,255,.12);border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-.obar{height:3px;background:var(--orange)}
-.mbody{padding:16px 18px 18px}
-.slabel{font-size:9.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);padding-bottom:5px;border-bottom:1.5px solid var(--bright);margin-bottom:12px;margin-top:18px;font-family:'Poppins',sans-serif}
-.slabel:first-child{margin-top:0}
-.field{margin-bottom:11px}
-.field label{display:block;font-size:12px;font-weight:500;color:var(--navy);margin-bottom:3px;font-family:'Poppins',sans-serif}
-.field .hint{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;line-height:1.5;font-family:'Poppins',sans-serif}
-.field input,.field textarea{width:100%;font-family:'Poppins',sans-serif;font-size:13px;padding:7px 10px;border:0.5px solid var(--bdr);border-radius:6px;background:var(--color-background-primary);color:var(--color-text-primary);outline:none;transition:border-color .15s}
-.field input:focus,.field textarea:focus{border-color:var(--bright);box-shadow:0 0 0 2px rgba(10,111,232,.1)}
-.field textarea{min-height:58px;resize:vertical}
+:root{--navy:#003873;--blue:#0253B6;--bright:#0A6FE8;--orange:#F47F46;--teal:#08C5A2;--light-bg:#EEF9FF;--border:#d0e8f5}
+body{font-family:'Poppins',sans-serif;background:transparent}
+.page{max-width:820px;margin:0 auto;padding:0 0 4rem}
+.form-header{background:var(--navy);border-radius:10px 10px 0 0;padding:22px 32px 20px;position:relative;overflow:hidden}
+.form-header::before{content:'';position:absolute;top:-30px;right:-30px;width:140px;height:140px;border-radius:50%;background:var(--bright);opacity:.12}
+.form-header::after{content:'';position:absolute;bottom:-20px;right:60px;width:80px;height:80px;border-radius:50%;background:var(--teal);opacity:.1}
+.header-eyebrow{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.header-title{font-size:20px;font-weight:300;color:#fff;margin-bottom:6px}
+.header-title span{color:var(--orange);font-weight:500}
+.header-sub{font-size:12px;color:rgba(255,255,255,.55);line-height:1.6}
+.header-sub .req-note{color:#ff6b6b}
+.orange-bar{height:3px;background:var(--orange)}
+.form-body{background:var(--color-background-primary,#fff);border:.5px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:26px 32px 30px}
+.section-label{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);padding-bottom:7px;border-bottom:1.5px solid var(--bright);margin-bottom:1.25rem;margin-top:2rem}
+.section-label:first-of-type{margin-top:0}
+.section-note{font-size:11.5px;color:var(--color-text-secondary,#888);margin-bottom:1rem;margin-top:-8px;line-height:1.5}
+.section-note a{color:var(--bright);text-decoration:none}
+.section-note a:hover{text-decoration:underline}
+.field{margin-bottom:1.2rem}
+.field label{display:block;font-size:12.5px;font-weight:500;color:var(--navy);margin-bottom:4px}
+.field .hint{font-size:11.5px;color:var(--color-text-secondary,#888);margin-bottom:5px;line-height:1.5}
+.field input,.field select,.field textarea{width:100%;font-family:'Poppins',sans-serif;font-size:13px;padding:8px 11px;border:.5px solid var(--border);border-radius:6px;background:var(--color-background-primary,#fff);color:var(--color-text-primary,#111);outline:none;transition:border-color .15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--bright)}
+.field textarea{min-height:68px;resize:vertical}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.grid3{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:12px}
 .req{color:#e74c3c}
-.opt{font-size:10px;font-weight:400;color:var(--color-text-secondary)}
-.g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
-.spend-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,152px);gap:10px;align-items:end}
-.tog{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-.tc{border:0.5px solid var(--bdr);border-radius:6px;padding:7px 8px;cursor:pointer;text-align:center;font-size:12px;font-weight:500;color:var(--navy);font-family:'Poppins',sans-serif;transition:all .15s;background:var(--color-background-primary);user-select:none}
-.tc.on{border-color:var(--bright);background:#f0f6ff;color:var(--blue)}
-.tc:hover:not(.on){border-color:var(--bright)}
-.svc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7px}
-.sc{border:0.5px solid var(--bdr);border-radius:6px;padding:10px 11px;cursor:pointer;transition:all .15s;background:var(--color-background-primary)}
-.sc:hover:not(.sdisabled){border-color:var(--bright)}
-.sc.on{border-color:var(--bright);background:#f0f6ff}
-.sc.sdisabled{opacity:.38;cursor:not-allowed;pointer-events:none}
-.sc-row{display:flex;align-items:flex-start;gap:7px}
-.sc-label{font-size:12px;font-weight:500;color:var(--navy);line-height:1.3;font-family:'Poppins',sans-serif}
-.sc-desc{font-size:10.5px;color:var(--color-text-secondary);margin-top:3px;padding-left:19px;line-height:1.5;font-family:'Poppins',sans-serif}
-.sc input[type=checkbox]{width:13px;height:13px;flex-shrink:0;margin-top:1px;accent-color:var(--bright)}
-.acv-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;margin-top:5px;font-family:'Poppins',sans-serif}
-.pill-ok{background:#e6f6e6;color:#1a6e1a}
-.pill-warn{background:#fff4e0;color:#8a4f00}
-.pill-bad{background:#fde8e8;color:#9b1c1c}
-.reject-box{border:0.5px solid #f5c4c4;border-radius:7px;overflow:hidden;margin-top:8px}
-.reject-head{background:#fde8e8;padding:9px 13px;display:flex;align-items:center;gap:7px}
-.reject-dot{width:16px;height:16px;border-radius:50%;background:#e74c3c;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.reject-dot svg{width:8px;height:8px}
-.reject-title{font-size:12px;font-weight:500;color:#7b1c1c;font-family:'Poppins',sans-serif}
-.reject-body{padding:9px 13px;font-size:11.5px;color:var(--color-text-secondary);line-height:1.7;background:var(--color-background-primary);font-family:'Poppins',sans-serif}
-.reject-body a{color:var(--bright);text-decoration:none}
-.identity-bar{display:flex;align-items:center;gap:8px;padding:7px 10px;border:0.5px solid var(--bdr);border-radius:6px;background:var(--color-background-secondary);margin-bottom:12px}
-.identity-avatar{width:24px;height:24px;border-radius:50%;background:#e8f1fb;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#0C447C;flex-shrink:0;font-family:'Poppins',sans-serif}
-.identity-name{font-size:12px;font-weight:500;color:var(--navy);font-family:'Poppins',sans-serif}
-.identity-sub{font-size:10.5px;color:var(--color-text-secondary);font-family:'Poppins',sans-serif;margin-left:2px}
-.identity-badge{margin-left:auto;font-size:9.5px;font-weight:500;padding:2px 8px;border-radius:20px;background:#e8f1fb;color:#0C447C;font-family:'Poppins',sans-serif}
-.mfooter{padding:11px 18px;border-top:0.5px solid var(--bdr);display:flex;justify-content:flex-end;align-items:center;gap:8px;background:var(--color-background-secondary)}
-.btn-cancel{padding:7px 15px;font-size:12px;font-family:'Poppins',sans-serif;border:0.5px solid var(--bdr);border-radius:6px;background:transparent;color:var(--color-text-secondary);cursor:pointer}
-.btn-submit{padding:7px 20px;font-size:12px;font-weight:500;font-family:'Poppins',sans-serif;background:var(--navy);border:none;border-radius:6px;color:#fff;cursor:pointer;transition:background .15s}
-.btn-submit:hover:not(:disabled){background:var(--blue)}
-.btn-submit:disabled{opacity:.4;cursor:not-allowed}
-.confirm-box{border:0.5px solid #b7dbb0;border-radius:7px;overflow:hidden;margin-top:10px}
-.confirm-head{background:#eaf6e8;padding:9px 13px;display:flex;align-items:center;gap:7px}
-.confirm-dot{width:16px;height:16px;border-radius:50%;background:#2ecc71;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.confirm-dot svg{width:8px;height:8px}
-.confirm-title{font-size:12px;font-weight:500;color:#1e6e1a;font-family:'Poppins',sans-serif}
-.confirm-body{padding:10px 13px;font-size:11.5px;color:var(--color-text-secondary);line-height:1.8;background:var(--color-background-primary);font-family:'Poppins',sans-serif}
+.opt{font-size:11px;font-weight:400;color:var(--color-text-secondary,#999)}
+.radio-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.rcard{border:.5px solid var(--border);border-radius:6px;padding:10px 12px;cursor:pointer;text-align:center;transition:border-color .15s,background .15s;display:flex;align-items:center;justify-content:center}
+.rcard:hover{border-color:var(--bright)}
+.rcard.on{border-color:var(--bright);background:#f0f6ff}
+.rcard .rc-label{font-size:12.5px;font-weight:500;color:var(--navy)}
+.rcard input{display:none}
+.spend-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,200px);gap:14px;align-items:end}
+.spend-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.spend-toggle .rcard{padding:9px 8px}
+.prod-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.prod-card{border:.5px solid var(--border);border-radius:6px;padding:10px 12px;cursor:pointer;text-align:center;transition:border-color .15s,background .15s;display:flex;align-items:center;justify-content:center}
+.prod-card:hover{border-color:var(--bright)}
+.prod-card.on{border-color:var(--bright);background:#f0f6ff}
+.prod-card .pc-label{font-size:13px;font-weight:500;color:var(--navy)}
+.prod-card input{display:none}
+.svc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+.svc-card{border:.5px solid var(--border);border-radius:6px;padding:11px 13px;cursor:pointer;transition:border-color .15s,background .15s}
+.svc-card:hover{border-color:var(--bright)}
+.svc-card.on{border-color:var(--bright);background:#f0f6ff}
+.svc-card .sc-row{display:flex;align-items:flex-start;gap:9px}
+.svc-card .sc-label{font-size:13px;font-weight:500;color:var(--navy);line-height:1.3}
+.svc-card .sc-desc{font-size:11px;color:var(--color-text-secondary,#888);margin-top:4px;line-height:1.55;padding-left:22px}
+.svc-card input[type=checkbox]{width:14px;height:14px;flex-shrink:0;margin-top:2px;accent-color:var(--bright)}
+.poc-block{border:.5px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px}
+.poc-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.poc-tag{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--blue)}
+.poc-remove{font-size:11px;color:var(--color-text-secondary,#888);background:none;border:none;cursor:pointer;font-family:'Poppins',sans-serif}
+.poc-remove:hover{color:#c0392b}
+.add-poc{width:100%;padding:9px;font-size:12.5px;border:.5px dashed var(--border);border-radius:6px;background:transparent;color:var(--color-text-secondary,#888);cursor:pointer;font-family:'Poppins',sans-serif}
+.add-poc:hover{background:var(--light-bg)}
+.sf-link-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}
+.sf-badge{font-size:10px;font-weight:500;padding:4px 10px;border-radius:20px;background:#e8f1fb;color:var(--blue);white-space:nowrap}
+.submit-bar{margin-top:2rem;padding-top:1.5rem;border-top:.5px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+.btn-clear{padding:9px 18px;font-size:13px;font-family:'Poppins',sans-serif;border:.5px solid var(--border);border-radius:6px;background:transparent;color:var(--color-text-secondary,#888);cursor:pointer}
+.btn-submit{padding:10px 28px;font-size:13px;font-weight:500;font-family:'Poppins',sans-serif;background:var(--navy);border:none;border-radius:6px;color:#fff;cursor:pointer;transition:background .15s}
+.btn-submit:hover{background:var(--blue)}
+.confirm-wrap{display:none;margin-top:1.5rem;border:.5px solid #b7dbb0;border-radius:8px;overflow:hidden}
+.confirm-head{background:#eaf6e8;padding:12px 16px;display:flex;align-items:center;gap:10px}
+.confirm-icon{width:20px;height:20px;border-radius:50%;background:#2ecc71;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.confirm-icon svg{width:11px;height:11px}
+.confirm-title{font-size:13px;font-weight:500;color:#1e6e1a}
+.confirm-body{padding:14px 16px;font-size:12.5px;color:var(--color-text-secondary,#555);line-height:1.8;background:var(--color-background-primary,#fff)}
 .confirm-body strong{color:var(--navy)}
-.payload-wrap{margin-top:12px;border:0.5px solid var(--bdr);border-radius:6px;overflow:hidden}
-.payload-head{padding:6px 11px;font-size:9.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);border-bottom:0.5px solid var(--bdr);background:var(--color-background-secondary);font-family:'Poppins',sans-serif;display:flex;justify-content:space-between;align-items:center}
-.payload-note{font-size:9.5px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--color-text-secondary)}
-.payload-body{padding:9px 11px;font-family:monospace;font-size:10.5px;color:var(--color-text-primary);line-height:1.7;white-space:pre-wrap;word-break:break-all;max-height:200px;overflow-y:auto;background:var(--color-background-primary)}
-.fnote{font-size:10px;color:var(--color-text-secondary);text-align:right;margin-top:8px;font-style:italic;font-family:'Poppins',sans-serif}
+.footer-note{font-size:10px;color:var(--color-text-secondary,#aaa);text-align:right;margin-top:16px;font-style:italic}
 </style>
 
-<h2 style="position:absolute;width:1px;height:1px;overflow:hidden">MOB Pre-Discovery Intake — Slack slash command modal simulator</h2>
-
-<div class="wrap">
-<div class="modal">
-
-  <div class="mhead">
-    <div class="mhead-left">
-      <div class="eyebrow">Managed Onboarding</div>
-      <div class="title">MOB Pre-Discovery Intake</div>
-    </div>
-    <button class="mclose" onclick="resetForm()">✕</button>
+<div class="page">
+  <div class="form-header">
+    <div class="header-eyebrow">Managed Onboarding</div>
+    <div class="header-title">MOB <span>Pre-Discovery Intake</span></div>
+    <div class="header-sub">Complete before engaging OBCOE. Do not pitch MOB to a client without Onboarding involvement. <span class="req-note">All fields marked * are required.</span></div>
   </div>
-  <div class="obar"></div>
+  <div class="orange-bar"></div>
+  <div class="form-body">
 
-  <div class="mbody">
+    <div class="section-label">Account</div>
 
-    <div class="slabel">Opportunity</div>
-
-    <div class="identity-bar">
-      <div class="identity-avatar" id="id_avatar">CR</div>
-      <div>
-        <span class="identity-name" id="id_name">Cassidy Ryan</span>
-        <span class="identity-sub" id="id_handle">@cassidy.ryan</span>
-      </div>
-      <span class="identity-badge">From Slack identity</span>
-    </div>
-
-    <div class="g2">
+    <div class="grid2">
       <div class="field">
-        <label>Opportunity ID <span class="req">*</span></label>
-        <div class="hint">SFDC Opportunity ID — written to pipeline tracker on submission.</div>
-        <input type="text" id="sf_opp_id" placeholder="e.g. 006Xx000001AbcD">
+        <label>Client name <span class="req">*</span></label>
+        <input type="text" id="sf_client_name" placeholder="e.g. Acme Corp">
       </div>
       <div class="field">
         <label>ACV <span class="req">*</span></label>
-        <div class="hint">Numeric value. Drives service eligibility.</div>
-        <input type="text" id="sf_acv" placeholder="e.g. 350000" oninput="evalAcv()">
-        <div id="acv_status"></div>
+        <input type="text" id="sf_acv" placeholder="e.g. $240,000">
       </div>
     </div>
 
-    <div id="reject_area"></div>
+    <div class="field">
+      <label>Salesforce opportunity link <span class="opt">(optional)</span></label>
+      <div class="sf-link-row">
+        <input type="url" id="sf_opp_url" placeholder="https://pacvue.lightning.force.com/lightning/r/Opportunity/...">
+        <span class="sf-badge">SFDC</span>
+      </div>
+    </div>
 
-    <div class="slabel">Scope</div>
+    <div class="field">
+      <label>Opportunity type <span class="req">*</span></label>
+      <div style="max-width:480px;margin:0 auto">
+        <div class="radio-row" id="opp_group">
+          <div class="rcard" data-val="New logo" onclick="pickRadio('opp_group',this)"><input type="radio" name="opp"><div class="rc-label">New logo</div></div>
+          <div class="rcard" data-val="Expansion" onclick="pickRadio('opp_group',this)"><input type="radio" name="opp"><div class="rc-label">Expansion</div></div>
+          <div class="rcard" data-val="Agency transition" onclick="pickRadio('opp_group',this)"><input type="radio" name="opp"><div class="rc-label">Agency transition</div></div>
+        </div>
+      </div>
+    </div>
 
     <div class="field">
       <label>Estimated ad spend under management <span class="req">*</span></label>
-      <div class="hint">Enter the figure and specify total or monthly.</div>
+      <div class="hint">Enter the figure and specify whether it is total or monthly.</div>
       <div class="spend-row">
-        <input type="text" id="sf_ad_spend" placeholder="e.g. 500000">
-        <div class="tog" id="spend_tog">
-          <div class="tc on" data-val="Total" onclick="pickTog('spend_tog',this)">Total</div>
-          <div class="tc" data-val="Monthly" onclick="pickTog('spend_tog',this)">Monthly</div>
+        <input type="text" id="sf_ad_spend" placeholder="e.g. $500,000">
+        <div class="spend-toggle" id="spend_group">
+          <div class="rcard on" data-val="Total" onclick="pickRadio('spend_group',this)"><div class="rc-label">Total</div></div>
+          <div class="rcard" data-val="Monthly" onclick="pickRadio('spend_group',this)"><div class="rc-label">Monthly</div></div>
         </div>
       </div>
     </div>
 
-    <div class="field">
-      <label>No. of brands / cohorts <span class="opt">(optional)</span></label>
-      <input type="number" id="sf_brands" placeholder="e.g. 3" min="1" style="max-width:200px">
+    <div class="section-label">Scope</div>
+
+    <div class="grid3">
+      <div class="field">
+        <label>No. of countries</label>
+        <input type="number" id="sf_countries" min="1" placeholder="1">
+      </div>
+      <div class="field">
+        <label>No. of retailers</label>
+        <input type="number" id="sf_retailers" min="1" placeholder="1">
+      </div>
+      <div class="field">
+        <label>No. of brands / cohorts</label>
+        <input type="number" id="sf_brands" min="1" placeholder="1">
+      </div>
     </div>
 
     <div class="field">
-      <label>Services needed <span class="req">*</span></label>
-      <div class="hint" id="svc_hint">Select all that apply.</div>
+      <label>Pacvue products in scope <span class="req">*</span></label>
+      <div class="hint">Select all that apply.</div>
+      <div class="prod-row" id="prod_group">
+        <div class="prod-card" data-val="Search" onclick="toggleCheck(this)"><input type="checkbox"><div class="pc-label">Search</div></div>
+        <div class="prod-card" data-val="DSP" onclick="toggleCheck(this)"><input type="checkbox"><div class="pc-label">DSP</div></div>
+        <div class="prod-card" data-val="Commerce" onclick="toggleCheck(this)"><input type="checkbox"><div class="pc-label">Commerce</div></div>
+      </div>
+    </div>
+
+    <div class="section-label">Services needed</div>
+    <div class="section-note">For more details, refer to the <a href="https://app.spekit.co/app/wiki/asset/48539711-d69e-46a5-b223-2a0c4de93e21?type=asset&expanded=true" target="_blank">MOB Spekit article</a>.</div>
+
+    <div class="field">
+      <label>Select all that apply <span class="req">*</span></label>
       <div class="svc-grid" id="svc_group">
-        <div class="sc" data-val="MOB Setup" onclick="toggleSvc(this)">
-          <div class="sc-row"><input type="checkbox"><span class="sc-label">MOB Setup</span></div>
-          <div class="sc-desc">Full foundational buildout — automation, rules, tagging, SOV config, temp ops coverage</div>
+        <div class="svc-card" data-val="MOB setup" onclick="toggleCheck(this)">
+          <div class="sc-row"><input type="checkbox"><span class="sc-label">MOB setup</span></div>
+          <div class="sc-desc">Full foundational buildout on the client's behalf — automation, rules, tagging, SOV config, and temporary ops coverage.</div>
         </div>
-        <div class="sc" data-val="Restructure" onclick="toggleSvc(this)">
+        <div class="svc-card" data-val="Restructure" onclick="toggleCheck(this)">
           <div class="sc-row"><input type="checkbox"><span class="sc-label">Restructure</span></div>
-          <div class="sc-desc">Performance audit and full campaign rebuild for legacy structures</div>
+          <div class="sc-desc">Performance audit and full campaign rebuild for accounts with legacy structures that need a clean start.</div>
         </div>
-        <div class="sc sdisabled" id="ts_card" data-val="Transitional Services" onclick="toggleSvc(this)">
-          <div class="sc-row"><input type="checkbox"><span class="sc-label">Transitional Services</span></div>
-          <div class="sc-desc">MOB Setup + temporary Pacvue-managed ops during agency transition or platform switch</div>
+        <div class="svc-card" data-val="Transitional services" onclick="toggleCheck(this)">
+          <div class="sc-row"><input type="checkbox"><span class="sc-label">Transitional services</span></div>
+          <div class="sc-desc">MOB setup plus temporary Pacvue-managed account operations during an agency transition or platform switch.</div>
         </div>
-        <div class="sc" data-val="Unsure — defer to MOB" onclick="toggleSvc(this)">
+        <div class="svc-card" data-val="Unsure — defer to MOB" onclick="toggleCheck(this)">
           <div class="sc-row"><input type="checkbox"><span class="sc-label">Unsure — defer to MOB</span></div>
-          <div class="sc-desc">Services unclear; MOB will assess scope during discovery</div>
+          <div class="sc-desc">Unsure of services needed. MOB will assess during discovery.</div>
         </div>
       </div>
-      <div id="ts_note" style="font-size:10.5px;color:var(--color-text-secondary);margin-top:5px;font-family:'Poppins',sans-serif">Transitional Services requires $400K+ ACV.</div>
     </div>
 
     <div class="field">
-      <label>Additional notes <span class="opt">(optional)</span></label>
-      <div class="hint">Migration scope, complexity, legacy structure, anything MOB should know pre-discovery.</div>
-      <textarea id="sf_notes" placeholder="e.g. Client is transitioning from agency-managed DSP; structure is fragmented across 4 brands"></textarea>
+      <label>Additional notes</label>
+      <div class="hint">Migration scope, complexity, legacy structure details, or anything else MOB should know before the discovery call.</div>
+      <textarea id="sf_notes" placeholder="e.g. Client is transitioning from Skai with 3 years of historical data. Agency-of-record is still running the account through end of quarter."></textarea>
     </div>
 
-    <div class="slabel">Timeline</div>
+    <div class="section-label">Timeline</div>
 
-    <div class="g2">
+    <div class="grid2">
       <div class="field">
         <label>Expected kickoff date <span class="req">*</span></label>
         <input type="date" id="sf_kickoff">
@@ -177,202 +201,185 @@
     </div>
 
     <div class="field">
-      <label>Upcoming peak / promo / tentpole event <span class="opt">(optional)</span></label>
-      <div class="hint">e.g. Prime Day, Q4 holiday, brand launch.</div>
-      <input type="text" id="sf_peak" placeholder="e.g. Prime Day — July 2025">
+      <label>Upcoming peak, promo period, or tentpole event <span class="opt">(optional)</span></label>
+      <input type="text" id="sf_peak" placeholder="e.g. Prime Day, Q4 holiday, brand launch">
     </div>
 
-    <div id="confirm_area"></div>
+    <div class="section-label">Points of contact</div>
 
+    <div id="poc_container">
+      <div class="poc-block" id="poc_0">
+        <div class="poc-hdr"><span class="poc-tag">Primary POC <span style="color:#e74c3c">*</span></span></div>
+        <div class="grid3">
+          <div class="field"><label>Name <span class="req">*</span></label><input type="text" class="poc-name" placeholder="Full name"></div>
+          <div class="field"><label>Title</label><input type="text" class="poc-title-f" placeholder="e.g. Sr. Brand Manager"></div>
+          <div class="field"><label>Email <span class="req">*</span></label><input type="email" class="poc-email" placeholder="email@company.com"></div>
+        </div>
+      </div>
+    </div>
+    <button class="add-poc" onclick="addPoc()">+ Add another POC</button>
+
+    <div class="section-label">Submitted by</div>
+
+    <div class="field" style="max-width:340px">
+      <label>Your name <span class="req">*</span></label>
+      <input type="text" id="sf_submitter" placeholder="First and last name">
+    </div>
+
+    <div class="submit-bar">
+      <button class="btn-clear" onclick="clearForm()">Clear</button>
+      <button class="btn-submit" onclick="submitForm()">Submit</button>
+    </div>
+
+    <div class="confirm-wrap" id="confirm_wrap">
+      <div class="confirm-head">
+        <div class="confirm-icon">
+          <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="confirm-title">Intake submitted</div>
+      </div>
+      <div class="confirm-body" id="confirm_body"></div>
+    </div>
+
+    <div class="footer-note">Pacvue OBCOE | Internal only | Do not share with clients</div>
   </div>
-
-  <div class="mfooter">
-    <button class="btn-cancel" onclick="resetForm()">Cancel</button>
-    <button class="btn-submit" id="submit_btn" onclick="submitForm()">Submit to MOB</button>
-  </div>
-
 </div>
-</div>
-
-<div class="fnote">Pacvue OBCOE · Internal only · Do not share with clients</div>
 
 <script>
-var acvVal = 0;
+let pocCount = 1;
 
-var SIMULATED_SLACK_USER = {
-  user_id: 'U0123DEMO',
-  user_name: 'cassidy.ryan',
-  display_name: 'Cassidy Ryan'
-};
-
-function getInitials(name){
-  var parts = name.trim().split(' ');
-  return parts.length >= 2 ? (parts[0][0]+parts[parts.length-1][0]).toUpperCase() : name.substring(0,2).toUpperCase();
-}
-
-function evalAcv(){
-  var raw = document.getElementById('sf_acv').value.replace(/[^0-9.]/g,'');
-  acvVal = parseFloat(raw) || 0;
-  var statusEl = document.getElementById('acv_status');
-  var rejectEl = document.getElementById('reject_area');
-  var tsCard = document.getElementById('ts_card');
-  var tsNote = document.getElementById('ts_note');
-  var hint = document.getElementById('svc_hint');
-
-  if(!raw){
-    statusEl.innerHTML='';
-    rejectEl.innerHTML='';
-    tsCard.classList.add('sdisabled');
-    tsNote.style.display='block';
-    return;
-  }
-
-  if(acvVal < 200000){
-    statusEl.innerHTML='<span class="acv-pill pill-bad">Not eligible — below $200K minimum</span>';
-    rejectEl.innerHTML=
-      '<div class="reject-box">'+
-      '<div class="reject-head"><div class="reject-dot"><svg viewBox="0 0 8 8" fill="none"><line x1="2" y1="2" x2="6" y2="6" stroke="#fff" stroke-width="1.5"/><line x1="6" y1="2" x2="2" y2="6" stroke="#fff" stroke-width="1.5"/></svg></div>'+
-      '<span class="reject-title">This opportunity does not meet the MOB eligibility threshold</span></div>'+
-      '<div class="reject-body">ACV of <strong>$'+Math.round(acvVal).toLocaleString()+'</strong> is below the $200,000 minimum required for Managed Onboarding.<br><br>'+
-      'Review MOB eligibility criteria: <a href="https://app.spekit.co/app/wiki/asset/48539711-d69e-46a5-b223-2a0c4de93e21?type=asset&expanded=true" target="_blank">Spekit — MOB Services &amp; Pricing</a><br><br>'+
-      'If you believe this is an error, contact <strong>Gabby Clarke</strong> or <strong>Kyle Kirkwood</strong> before resubmitting.</div></div>';
-    tsCard.classList.add('sdisabled');
-    if(tsCard.classList.contains('on')){tsCard.classList.remove('on');tsCard.querySelector('input').checked=false;}
-    tsNote.style.display='block';
-    hint.textContent='Select all that apply.';
-  } else if(acvVal < 400000){
-    statusEl.innerHTML='<span class="acv-pill pill-warn">$200K–$399K — MOB Setup and Restructure only</span>';
-    rejectEl.innerHTML='';
-    tsCard.classList.add('sdisabled');
-    if(tsCard.classList.contains('on')){tsCard.classList.remove('on');tsCard.querySelector('input').checked=false;}
-    tsNote.style.display='block';
-    hint.textContent='Select all that apply. Transitional Services requires $400K+ ACV.';
-  } else {
-    statusEl.innerHTML='<span class="acv-pill pill-ok">$400K+ — all services eligible</span>';
-    rejectEl.innerHTML='';
-    tsCard.classList.remove('sdisabled');
-    tsNote.style.display='none';
-    hint.textContent='Select all that apply.';
-  }
-}
-
-function pickTog(groupId, el){
-  document.querySelectorAll('#'+groupId+' .tc').forEach(function(c){c.classList.remove('on');});
+function pickRadio(groupId, el) {
+  document.querySelectorAll('#' + groupId + ' .rcard').forEach(c => c.classList.remove('on'));
   el.classList.add('on');
 }
 
-function toggleSvc(el){
-  if(el.classList.contains('sdisabled')) return;
+function toggleCheck(el) {
   el.classList.toggle('on');
   el.querySelector('input[type=checkbox]').checked = el.classList.contains('on');
 }
 
-function getTogVal(groupId){
-  var el = document.querySelector('#'+groupId+' .tc.on');
+function getChecked(groupId) {
+  return Array.from(document.querySelectorAll('#' + groupId + ' .on')).map(c => c.dataset.val).filter(Boolean);
+}
+
+function getRadio(groupId) {
+  const el = document.querySelector('#' + groupId + ' .rcard.on');
   return el ? el.dataset.val : '';
 }
 
-function getChecked(groupId){
-  return Array.from(document.querySelectorAll('#'+groupId+' .sc.on:not(.sdisabled)')).map(function(c){return c.dataset.val;});
+function v(id) { const e = document.getElementById(id); return e ? e.value.trim() : ''; }
+
+function addPoc() {
+  pocCount++;
+  const c = document.getElementById('poc_container');
+  const d = document.createElement('div');
+  d.className = 'poc-block';
+  d.id = 'poc_' + pocCount;
+  d.innerHTML = `<div class="poc-hdr"><span class="poc-tag">POC ${pocCount}</span><button class="poc-remove" onclick="document.getElementById('poc_${pocCount}').remove()">Remove</button></div><div class="grid3"><div class="field"><label>Name</label><input type="text" class="poc-name" placeholder="Full name"></div><div class="field"><label>Title</label><input type="text" class="poc-title-f" placeholder="e.g. Brand Manager"></div><div class="field"><label>Email</label><input type="email" class="poc-email" placeholder="email@company.com"></div></div>`;
+  c.appendChild(d);
 }
 
-function v(id){var e=document.getElementById(id);return e?e.value.trim():'';}
+function getPocs() {
+  return Array.from(document.querySelectorAll('.poc-block')).map((b, i) => ({
+    n: i + 1,
+    name: b.querySelector('.poc-name').value.trim(),
+    title: b.querySelector('.poc-title-f').value.trim(),
+    email: b.querySelector('.poc-email').value.trim()
+  })).filter(p => p.name || p.email);
+}
 
-function submitForm(){
-  var oppId = v('sf_opp_id');
-  var acvRaw = v('sf_acv');
-  var adSpend = v('sf_ad_spend');
-  var spendType = getTogVal('spend_tog');
-  var svcs = getChecked('svc_group');
-  var kickoff = v('sf_kickoff');
+function submitForm() {
+  const client = v('sf_client_name');
+  const acv = v('sf_acv');
+  const opp = getRadio('opp_group');
+  const spend = v('sf_ad_spend');
+  const spendType = getRadio('spend_group');
+  const prods = getChecked('prod_group');
+  const svcs = getChecked('svc_group');
+  const kickoff = v('sf_kickoff');
+  const submitter = v('sf_submitter');
+  const primaryName = document.querySelector('#poc_0 .poc-name').value.trim();
+  const primaryEmail = document.querySelector('#poc_0 .poc-email').value.trim();
 
-  if(!oppId||!acvRaw||!adSpend||svcs.length===0||!kickoff){
+  if (!client || !acv || !opp || !spend || prods.length === 0 || svcs.length === 0 || !kickoff || !submitter || !primaryName || !primaryEmail) {
     alert('Please complete all required fields before submitting.');
     return;
   }
-  if(acvVal < 200000){
-    alert('This opportunity does not meet the $200K ACV minimum for MOB. Submission blocked.');
-    return;
-  }
 
-  /* ─────────────────────────────────────────────────────────────────────
-     ROUTING PLACEHOLDERS — update when confirmed
-     OBCOE_WEBHOOK_URL → Slack incoming webhook for the OBCOE channel
-     PA_FLOW_ENDPOINT  → Power Automate HTTP trigger URL (Skill 3)
-     Both are null until routing destinations are confirmed with the team.
+  const pocs = getPocs();
+  const golive = v('sf_golive');
+  const peak = v('sf_peak');
+  const notes = v('sf_notes');
+  const countries = v('sf_countries');
+  const retailers = v('sf_retailers');
+  const brands = v('sf_brands');
+  const sfUrl = v('sf_opp_url');
 
-     SLACK IDENTITY NOTE — in production, submitted_by_slack_id and
-     submitted_by_slack_name are injected by the backend middleware from
-     the slash command payload (user_id / user_name fields). They are
-     never exposed as Sales-facing inputs in the modal.
-  ───────────────────────────────────────────────────────────────────── */
-  var OBCOE_WEBHOOK_URL = null;
-  var PA_FLOW_ENDPOINT  = null;
+  const subject = `MOB Pre-Discovery Intake — ${client}`;
 
-  var payload = {
-    sf_opp_id: oppId,
-    sf_acv: acvRaw,
-    sf_ad_spend: v('sf_ad_spend'),
-    spend_type: spendType,
-    sf_brands: v('sf_brands') || null,
-    services: svcs,
-    sf_notes: v('sf_notes') || null,
-    sf_kickoff: kickoff,
-    sf_golive: v('sf_golive') || null,
-    sf_peak: v('sf_peak') || null,
-    submitted_by_slack_id: SIMULATED_SLACK_USER.user_id,
-    submitted_by_slack_name: SIMULATED_SLACK_USER.user_name,
-    submitted_by_display_name: SIMULATED_SLACK_USER.display_name,
-    submitted_at: new Date().toISOString(),
-    status: 'Pending'
-  };
+  let pocLines = pocs.map((p, i) => `  POC ${i+1}: ${p.name}${p.title ? ', ' + p.title : ''}${p.email ? ' | ' + p.email : ''}`).join('\n');
 
-  if(OBCOE_WEBHOOK_URL){
-    var msg='*MOB Pre-Discovery Intake*\n>Submitted by <@'+SIMULATED_SLACK_USER.user_id+'> | Opp ID: '+oppId+' | ACV: $'+Math.round(acvVal).toLocaleString()+'\n*Ad spend:* '+adSpend+' ('+spendType+')\n*Services:* '+svcs.join(', ')+'\n*Kickoff:* '+kickoff+(v('sf_golive')?' | *Go-live:* '+v('sf_golive'):'')+(v('sf_peak')?'\n*Peak/promo:* '+v('sf_peak'):'')+(v('sf_notes')?'\n*Notes:* '+v('sf_notes'):'');
-    fetch(OBCOE_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:msg})}).catch(function(){});
-  }
-  if(PA_FLOW_ENDPOINT){
-    fetch(PA_FLOW_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(function(){});
-  }
+  const body =
+`ACCOUNT
+-------
+Client: ${client}
+ACV: ${acv}
+Opportunity type: ${opp}${sfUrl ? '\nSFDC link: ' + sfUrl : ''}
 
-  var confirmEl = document.getElementById('confirm_area');
-  confirmEl.innerHTML=
-    '<div class="confirm-box">'+
-    '<div class="confirm-head"><div class="confirm-dot"><svg viewBox="0 0 8 8" fill="none"><polyline points="1.5,4 3.5,6 6.5,2" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div>'+
-    '<span class="confirm-title">Submitted — OBCOE will follow up to confirm scope</span></div>'+
-    '<div class="confirm-body">'+
-    '<strong>Submitted by:</strong> '+SIMULATED_SLACK_USER.display_name+' (@'+SIMULATED_SLACK_USER.user_name+')<br>'+
-    '<strong>Opp ID:</strong> '+oppId+'<br>'+
-    '<strong>ACV:</strong> $'+Math.round(acvVal).toLocaleString()+'<br>'+
-    '<strong>Ad spend:</strong> '+adSpend+' ('+spendType+')<br>'+
-    '<strong>Services:</strong> '+svcs.join(', ')+'<br>'+
-    '<strong>Kickoff:</strong> '+kickoff+(v('sf_golive')?' &nbsp;|&nbsp; <strong>Go-live:</strong> '+v('sf_golive'):'')+(v('sf_peak')?'<br><strong>Peak / promo:</strong> '+v('sf_peak'):'')+(v('sf_notes')?'<br><strong>Notes:</strong> '+v('sf_notes'):'')+
-    '<br><br>Do not quote MOB pricing without Gabby or Kyle\'s sign-off.'+
-    '<div class="payload-wrap"><div class="payload-head">Power Automate payload<span class="payload-note">→ Skill 3 / PA_FLOW_ENDPOINT</span></div>'+
-    '<div class="payload-body">'+JSON.stringify(payload,null,2)+'</div></div>'+
-    '</div></div>';
+SCOPE
+-----
+Estimated ad spend: ${spend} (${spendType})${countries ? '\nNo. of countries: ' + countries : ''}${retailers ? '\nNo. of retailers: ' + retailers : ''}${brands ? '\nNo. of brands / cohorts: ' + brands : ''}
+Products in scope: ${prods.join(', ')}
+Services needed: ${svcs.join(', ')}${notes ? '\n\nNotes: ' + notes : ''}
 
-  confirmEl.scrollIntoView({behavior:'smooth',block:'start'});
-  document.getElementById('submit_btn').disabled=true;
+TIMELINE
+--------
+Expected kickoff: ${kickoff}${golive ? '\nGoal go-live: ' + golive : ''}${peak ? '\nUpcoming peak / promo: ' + peak : ''}
+
+POINTS OF CONTACT
+-----------------
+${pocLines}
+
+SUBMITTED BY
+------------
+${submitter}
+Submitted: ${new Date().toLocaleString()}
+
+---
+Do not quote MOB pricing without Gabby or Kyle's sign-off.
+Pacvue OBCOE | Internal only`;
+
+  const mailto = `mailto:cassidy.ryan@pacvue.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailto;
+
+  const confirmBody = document.getElementById('confirm_body');
+  confirmBody.innerHTML =
+    `<strong>${client}</strong> has been submitted for MOB pre-discovery review.<br><br>` +
+    `<strong>ACV:</strong> ${acv} &nbsp;|&nbsp; <strong>Type:</strong> ${opp}<br>` +
+    `<strong>Ad spend:</strong> ${spend} (${spendType})<br>` +
+    `<strong>Products:</strong> ${prods.join(', ')}<br>` +
+    `<strong>Services:</strong> ${svcs.join(', ')}<br>` +
+    `<strong>Expected kickoff:</strong> ${kickoff}` +
+    (golive ? ` &nbsp;|&nbsp; <strong>Goal go-live:</strong> ${golive}` : '') +
+    (peak ? `<br><strong>Peak / promo:</strong> ${peak}` : '') +
+    `<br><strong>Primary POC:</strong> ${primaryName} (${primaryEmail})` +
+    (sfUrl ? `<br><strong>SFDC opportunity:</strong> <a href="${sfUrl}" target="_blank" style="color:var(--bright)">View in Salesforce</a>` : '') +
+    `<br><br>Your email client should have opened with a pre-filled submission. If it did not, copy the details above and send manually to <a href="mailto:cassidy.ryan@pacvue.com" style="color:var(--bright)">cassidy.ryan@pacvue.com</a>.<br><br>OBCOE will follow up to confirm scope. Do not quote pricing without Gabby or Kyle's sign-off.`;
+
+  const wrap = document.getElementById('confirm_wrap');
+  wrap.style.display = 'block';
+  wrap.scrollIntoView({ behavior:'smooth', block:'start' });
 }
 
-function resetForm(){
-  ['sf_opp_id','sf_acv','sf_ad_spend','sf_brands','sf_notes','sf_kickoff','sf_golive','sf_peak'].forEach(function(id){
-    var e=document.getElementById(id);if(e)e.value='';
-  });
-  document.querySelectorAll('#spend_tog .tc').forEach(function(c){c.classList.remove('on');});
-  document.querySelector('#spend_tog .tc[data-val="Total"]').classList.add('on');
-  document.querySelectorAll('#svc_group .sc').forEach(function(c){c.classList.remove('on');c.querySelector('input').checked=false;});
-  document.getElementById('acv_status').innerHTML='';
-  document.getElementById('reject_area').innerHTML='';
-  document.getElementById('confirm_area').innerHTML='';
-  document.getElementById('ts_card').classList.add('sdisabled');
-  document.getElementById('ts_note').style.display='block';
-  document.getElementById('submit_btn').disabled=false;
-  acvVal=0;
+function clearForm() {
+  document.querySelectorAll('input:not([type=radio]):not([type=checkbox]), textarea').forEach(el => el.value = '');
+  document.querySelectorAll('.rcard.on').forEach(el => el.classList.remove('on'));
+  document.querySelectorAll('#spend_group .rcard').forEach(el => { if (el.dataset.val === 'Total') el.classList.add('on'); });
+  document.querySelectorAll('.prod-card.on, .svc-card.on').forEach(el => { el.classList.remove('on'); el.querySelector('input').checked = false; });
+  document.querySelectorAll('[id^="poc_"]:not(#poc_0)').forEach(el => el.remove());
+  pocCount = 1;
+  document.getElementById('confirm_wrap').style.display = 'none';
 }
-
-document.getElementById('id_avatar').textContent = getInitials(SIMULATED_SLACK_USER.display_name);
-document.getElementById('id_name').textContent = SIMULATED_SLACK_USER.display_name;
-document.getElementById('id_handle').textContent = '@'+SIMULATED_SLACK_USER.user_name;
 </script>
