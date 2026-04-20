@@ -1,0 +1,378 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#003873;--blue:#0253B6;--bright:#0A6FE8;--orange:#F47F46;--teal:#08C5A2;--bdr:#d0e8f5}
+.wrap{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:20px;display:flex;justify-content:center}
+.modal{background:var(--color-background-primary);border-radius:8px;width:100%;max-width:580px;border:0.5px solid var(--color-border-tertiary);overflow:hidden}
+.mhead{background:var(--navy);padding:14px 18px;display:flex;justify-content:space-between;align-items:flex-start}
+.mhead-left .eyebrow{font-size:9.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:3px;font-family:'Poppins',sans-serif}
+.mhead-left .title{font-size:14.5px;font-weight:500;color:#fff;font-family:'Poppins',sans-serif}
+.mclose{background:rgba(255,255,255,.12);border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.obar{height:3px;background:var(--orange)}
+.mbody{padding:16px 18px 18px}
+.slabel{font-size:9.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);padding-bottom:5px;border-bottom:1.5px solid var(--bright);margin-bottom:12px;margin-top:18px;font-family:'Poppins',sans-serif}
+.slabel:first-child{margin-top:0}
+.field{margin-bottom:11px}
+.field label{display:block;font-size:12px;font-weight:500;color:var(--navy);margin-bottom:3px;font-family:'Poppins',sans-serif}
+.field .hint{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;line-height:1.5;font-family:'Poppins',sans-serif}
+.field input,.field textarea{width:100%;font-family:'Poppins',sans-serif;font-size:13px;padding:7px 10px;border:0.5px solid var(--bdr);border-radius:6px;background:var(--color-background-primary);color:var(--color-text-primary);outline:none;transition:border-color .15s}
+.field input:focus,.field textarea:focus{border-color:var(--bright);box-shadow:0 0 0 2px rgba(10,111,232,.1)}
+.field textarea{min-height:58px;resize:vertical}
+.req{color:#e74c3c}
+.opt{font-size:10px;font-weight:400;color:var(--color-text-secondary)}
+.g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.spend-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,152px);gap:10px;align-items:end}
+.tog{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.tc{border:0.5px solid var(--bdr);border-radius:6px;padding:7px 8px;cursor:pointer;text-align:center;font-size:12px;font-weight:500;color:var(--navy);font-family:'Poppins',sans-serif;transition:all .15s;background:var(--color-background-primary);user-select:none}
+.tc.on{border-color:var(--bright);background:#f0f6ff;color:var(--blue)}
+.tc:hover:not(.on){border-color:var(--bright)}
+.svc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7px}
+.sc{border:0.5px solid var(--bdr);border-radius:6px;padding:10px 11px;cursor:pointer;transition:all .15s;background:var(--color-background-primary)}
+.sc:hover:not(.sdisabled){border-color:var(--bright)}
+.sc.on{border-color:var(--bright);background:#f0f6ff}
+.sc.sdisabled{opacity:.38;cursor:not-allowed;pointer-events:none}
+.sc-row{display:flex;align-items:flex-start;gap:7px}
+.sc-label{font-size:12px;font-weight:500;color:var(--navy);line-height:1.3;font-family:'Poppins',sans-serif}
+.sc-desc{font-size:10.5px;color:var(--color-text-secondary);margin-top:3px;padding-left:19px;line-height:1.5;font-family:'Poppins',sans-serif}
+.sc input[type=checkbox]{width:13px;height:13px;flex-shrink:0;margin-top:1px;accent-color:var(--bright)}
+.acv-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;margin-top:5px;font-family:'Poppins',sans-serif}
+.pill-ok{background:#e6f6e6;color:#1a6e1a}
+.pill-warn{background:#fff4e0;color:#8a4f00}
+.pill-bad{background:#fde8e8;color:#9b1c1c}
+.reject-box{border:0.5px solid #f5c4c4;border-radius:7px;overflow:hidden;margin-top:8px}
+.reject-head{background:#fde8e8;padding:9px 13px;display:flex;align-items:center;gap:7px}
+.reject-dot{width:16px;height:16px;border-radius:50%;background:#e74c3c;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.reject-dot svg{width:8px;height:8px}
+.reject-title{font-size:12px;font-weight:500;color:#7b1c1c;font-family:'Poppins',sans-serif}
+.reject-body{padding:9px 13px;font-size:11.5px;color:var(--color-text-secondary);line-height:1.7;background:var(--color-background-primary);font-family:'Poppins',sans-serif}
+.reject-body a{color:var(--bright);text-decoration:none}
+.identity-bar{display:flex;align-items:center;gap:8px;padding:7px 10px;border:0.5px solid var(--bdr);border-radius:6px;background:var(--color-background-secondary);margin-bottom:12px}
+.identity-avatar{width:24px;height:24px;border-radius:50%;background:#e8f1fb;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#0C447C;flex-shrink:0;font-family:'Poppins',sans-serif}
+.identity-name{font-size:12px;font-weight:500;color:var(--navy);font-family:'Poppins',sans-serif}
+.identity-sub{font-size:10.5px;color:var(--color-text-secondary);font-family:'Poppins',sans-serif;margin-left:2px}
+.identity-badge{margin-left:auto;font-size:9.5px;font-weight:500;padding:2px 8px;border-radius:20px;background:#e8f1fb;color:#0C447C;font-family:'Poppins',sans-serif}
+.mfooter{padding:11px 18px;border-top:0.5px solid var(--bdr);display:flex;justify-content:flex-end;align-items:center;gap:8px;background:var(--color-background-secondary)}
+.btn-cancel{padding:7px 15px;font-size:12px;font-family:'Poppins',sans-serif;border:0.5px solid var(--bdr);border-radius:6px;background:transparent;color:var(--color-text-secondary);cursor:pointer}
+.btn-submit{padding:7px 20px;font-size:12px;font-weight:500;font-family:'Poppins',sans-serif;background:var(--navy);border:none;border-radius:6px;color:#fff;cursor:pointer;transition:background .15s}
+.btn-submit:hover:not(:disabled){background:var(--blue)}
+.btn-submit:disabled{opacity:.4;cursor:not-allowed}
+.confirm-box{border:0.5px solid #b7dbb0;border-radius:7px;overflow:hidden;margin-top:10px}
+.confirm-head{background:#eaf6e8;padding:9px 13px;display:flex;align-items:center;gap:7px}
+.confirm-dot{width:16px;height:16px;border-radius:50%;background:#2ecc71;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.confirm-dot svg{width:8px;height:8px}
+.confirm-title{font-size:12px;font-weight:500;color:#1e6e1a;font-family:'Poppins',sans-serif}
+.confirm-body{padding:10px 13px;font-size:11.5px;color:var(--color-text-secondary);line-height:1.8;background:var(--color-background-primary);font-family:'Poppins',sans-serif}
+.confirm-body strong{color:var(--navy)}
+.payload-wrap{margin-top:12px;border:0.5px solid var(--bdr);border-radius:6px;overflow:hidden}
+.payload-head{padding:6px 11px;font-size:9.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);border-bottom:0.5px solid var(--bdr);background:var(--color-background-secondary);font-family:'Poppins',sans-serif;display:flex;justify-content:space-between;align-items:center}
+.payload-note{font-size:9.5px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--color-text-secondary)}
+.payload-body{padding:9px 11px;font-family:monospace;font-size:10.5px;color:var(--color-text-primary);line-height:1.7;white-space:pre-wrap;word-break:break-all;max-height:200px;overflow-y:auto;background:var(--color-background-primary)}
+.fnote{font-size:10px;color:var(--color-text-secondary);text-align:right;margin-top:8px;font-style:italic;font-family:'Poppins',sans-serif}
+</style>
+
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden">MOB Pre-Discovery Intake — Slack slash command modal simulator</h2>
+
+<div class="wrap">
+<div class="modal">
+
+  <div class="mhead">
+    <div class="mhead-left">
+      <div class="eyebrow">Managed Onboarding</div>
+      <div class="title">MOB Pre-Discovery Intake</div>
+    </div>
+    <button class="mclose" onclick="resetForm()">✕</button>
+  </div>
+  <div class="obar"></div>
+
+  <div class="mbody">
+
+    <div class="slabel">Opportunity</div>
+
+    <div class="identity-bar">
+      <div class="identity-avatar" id="id_avatar">CR</div>
+      <div>
+        <span class="identity-name" id="id_name">Cassidy Ryan</span>
+        <span class="identity-sub" id="id_handle">@cassidy.ryan</span>
+      </div>
+      <span class="identity-badge">From Slack identity</span>
+    </div>
+
+    <div class="g2">
+      <div class="field">
+        <label>Opportunity ID <span class="req">*</span></label>
+        <div class="hint">SFDC Opportunity ID — written to pipeline tracker on submission.</div>
+        <input type="text" id="sf_opp_id" placeholder="e.g. 006Xx000001AbcD">
+      </div>
+      <div class="field">
+        <label>ACV <span class="req">*</span></label>
+        <div class="hint">Numeric value. Drives service eligibility.</div>
+        <input type="text" id="sf_acv" placeholder="e.g. 350000" oninput="evalAcv()">
+        <div id="acv_status"></div>
+      </div>
+    </div>
+
+    <div id="reject_area"></div>
+
+    <div class="slabel">Scope</div>
+
+    <div class="field">
+      <label>Estimated ad spend under management <span class="req">*</span></label>
+      <div class="hint">Enter the figure and specify total or monthly.</div>
+      <div class="spend-row">
+        <input type="text" id="sf_ad_spend" placeholder="e.g. 500000">
+        <div class="tog" id="spend_tog">
+          <div class="tc on" data-val="Total" onclick="pickTog('spend_tog',this)">Total</div>
+          <div class="tc" data-val="Monthly" onclick="pickTog('spend_tog',this)">Monthly</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>No. of brands / cohorts <span class="opt">(optional)</span></label>
+      <input type="number" id="sf_brands" placeholder="e.g. 3" min="1" style="max-width:200px">
+    </div>
+
+    <div class="field">
+      <label>Services needed <span class="req">*</span></label>
+      <div class="hint" id="svc_hint">Select all that apply.</div>
+      <div class="svc-grid" id="svc_group">
+        <div class="sc" data-val="MOB Setup" onclick="toggleSvc(this)">
+          <div class="sc-row"><input type="checkbox"><span class="sc-label">MOB Setup</span></div>
+          <div class="sc-desc">Full foundational buildout — automation, rules, tagging, SOV config, temp ops coverage</div>
+        </div>
+        <div class="sc" data-val="Restructure" onclick="toggleSvc(this)">
+          <div class="sc-row"><input type="checkbox"><span class="sc-label">Restructure</span></div>
+          <div class="sc-desc">Performance audit and full campaign rebuild for legacy structures</div>
+        </div>
+        <div class="sc sdisabled" id="ts_card" data-val="Transitional Services" onclick="toggleSvc(this)">
+          <div class="sc-row"><input type="checkbox"><span class="sc-label">Transitional Services</span></div>
+          <div class="sc-desc">MOB Setup + temporary Pacvue-managed ops during agency transition or platform switch</div>
+        </div>
+        <div class="sc" data-val="Unsure — defer to MOB" onclick="toggleSvc(this)">
+          <div class="sc-row"><input type="checkbox"><span class="sc-label">Unsure — defer to MOB</span></div>
+          <div class="sc-desc">Services unclear; MOB will assess scope during discovery</div>
+        </div>
+      </div>
+      <div id="ts_note" style="font-size:10.5px;color:var(--color-text-secondary);margin-top:5px;font-family:'Poppins',sans-serif">Transitional Services requires $400K+ ACV.</div>
+    </div>
+
+    <div class="field">
+      <label>Additional notes <span class="opt">(optional)</span></label>
+      <div class="hint">Migration scope, complexity, legacy structure, anything MOB should know pre-discovery.</div>
+      <textarea id="sf_notes" placeholder="e.g. Client is transitioning from agency-managed DSP; structure is fragmented across 4 brands"></textarea>
+    </div>
+
+    <div class="slabel">Timeline</div>
+
+    <div class="g2">
+      <div class="field">
+        <label>Expected kickoff date <span class="req">*</span></label>
+        <input type="date" id="sf_kickoff">
+      </div>
+      <div class="field">
+        <label>Goal go-live date <span class="opt">(optional)</span></label>
+        <input type="date" id="sf_golive">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Upcoming peak / promo / tentpole event <span class="opt">(optional)</span></label>
+      <div class="hint">e.g. Prime Day, Q4 holiday, brand launch.</div>
+      <input type="text" id="sf_peak" placeholder="e.g. Prime Day — July 2025">
+    </div>
+
+    <div id="confirm_area"></div>
+
+  </div>
+
+  <div class="mfooter">
+    <button class="btn-cancel" onclick="resetForm()">Cancel</button>
+    <button class="btn-submit" id="submit_btn" onclick="submitForm()">Submit to MOB</button>
+  </div>
+
+</div>
+</div>
+
+<div class="fnote">Pacvue OBCOE · Internal only · Do not share with clients</div>
+
+<script>
+var acvVal = 0;
+
+var SIMULATED_SLACK_USER = {
+  user_id: 'U0123DEMO',
+  user_name: 'cassidy.ryan',
+  display_name: 'Cassidy Ryan'
+};
+
+function getInitials(name){
+  var parts = name.trim().split(' ');
+  return parts.length >= 2 ? (parts[0][0]+parts[parts.length-1][0]).toUpperCase() : name.substring(0,2).toUpperCase();
+}
+
+function evalAcv(){
+  var raw = document.getElementById('sf_acv').value.replace(/[^0-9.]/g,'');
+  acvVal = parseFloat(raw) || 0;
+  var statusEl = document.getElementById('acv_status');
+  var rejectEl = document.getElementById('reject_area');
+  var tsCard = document.getElementById('ts_card');
+  var tsNote = document.getElementById('ts_note');
+  var hint = document.getElementById('svc_hint');
+
+  if(!raw){
+    statusEl.innerHTML='';
+    rejectEl.innerHTML='';
+    tsCard.classList.add('sdisabled');
+    tsNote.style.display='block';
+    return;
+  }
+
+  if(acvVal < 200000){
+    statusEl.innerHTML='<span class="acv-pill pill-bad">Not eligible — below $200K minimum</span>';
+    rejectEl.innerHTML=
+      '<div class="reject-box">'+
+      '<div class="reject-head"><div class="reject-dot"><svg viewBox="0 0 8 8" fill="none"><line x1="2" y1="2" x2="6" y2="6" stroke="#fff" stroke-width="1.5"/><line x1="6" y1="2" x2="2" y2="6" stroke="#fff" stroke-width="1.5"/></svg></div>'+
+      '<span class="reject-title">This opportunity does not meet the MOB eligibility threshold</span></div>'+
+      '<div class="reject-body">ACV of <strong>$'+Math.round(acvVal).toLocaleString()+'</strong> is below the $200,000 minimum required for Managed Onboarding.<br><br>'+
+      'Review MOB eligibility criteria: <a href="https://app.spekit.co/app/wiki/asset/48539711-d69e-46a5-b223-2a0c4de93e21?type=asset&expanded=true" target="_blank">Spekit — MOB Services &amp; Pricing</a><br><br>'+
+      'If you believe this is an error, contact <strong>Gabby Clarke</strong> or <strong>Kyle Kirkwood</strong> before resubmitting.</div></div>';
+    tsCard.classList.add('sdisabled');
+    if(tsCard.classList.contains('on')){tsCard.classList.remove('on');tsCard.querySelector('input').checked=false;}
+    tsNote.style.display='block';
+    hint.textContent='Select all that apply.';
+  } else if(acvVal < 400000){
+    statusEl.innerHTML='<span class="acv-pill pill-warn">$200K–$399K — MOB Setup and Restructure only</span>';
+    rejectEl.innerHTML='';
+    tsCard.classList.add('sdisabled');
+    if(tsCard.classList.contains('on')){tsCard.classList.remove('on');tsCard.querySelector('input').checked=false;}
+    tsNote.style.display='block';
+    hint.textContent='Select all that apply. Transitional Services requires $400K+ ACV.';
+  } else {
+    statusEl.innerHTML='<span class="acv-pill pill-ok">$400K+ — all services eligible</span>';
+    rejectEl.innerHTML='';
+    tsCard.classList.remove('sdisabled');
+    tsNote.style.display='none';
+    hint.textContent='Select all that apply.';
+  }
+}
+
+function pickTog(groupId, el){
+  document.querySelectorAll('#'+groupId+' .tc').forEach(function(c){c.classList.remove('on');});
+  el.classList.add('on');
+}
+
+function toggleSvc(el){
+  if(el.classList.contains('sdisabled')) return;
+  el.classList.toggle('on');
+  el.querySelector('input[type=checkbox]').checked = el.classList.contains('on');
+}
+
+function getTogVal(groupId){
+  var el = document.querySelector('#'+groupId+' .tc.on');
+  return el ? el.dataset.val : '';
+}
+
+function getChecked(groupId){
+  return Array.from(document.querySelectorAll('#'+groupId+' .sc.on:not(.sdisabled)')).map(function(c){return c.dataset.val;});
+}
+
+function v(id){var e=document.getElementById(id);return e?e.value.trim():'';}
+
+function submitForm(){
+  var oppId = v('sf_opp_id');
+  var acvRaw = v('sf_acv');
+  var adSpend = v('sf_ad_spend');
+  var spendType = getTogVal('spend_tog');
+  var svcs = getChecked('svc_group');
+  var kickoff = v('sf_kickoff');
+
+  if(!oppId||!acvRaw||!adSpend||svcs.length===0||!kickoff){
+    alert('Please complete all required fields before submitting.');
+    return;
+  }
+  if(acvVal < 200000){
+    alert('This opportunity does not meet the $200K ACV minimum for MOB. Submission blocked.');
+    return;
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────
+     ROUTING PLACEHOLDERS — update when confirmed
+     OBCOE_WEBHOOK_URL → Slack incoming webhook for the OBCOE channel
+     PA_FLOW_ENDPOINT  → Power Automate HTTP trigger URL (Skill 3)
+     Both are null until routing destinations are confirmed with the team.
+
+     SLACK IDENTITY NOTE — in production, submitted_by_slack_id and
+     submitted_by_slack_name are injected by the backend middleware from
+     the slash command payload (user_id / user_name fields). They are
+     never exposed as Sales-facing inputs in the modal.
+  ───────────────────────────────────────────────────────────────────── */
+  var OBCOE_WEBHOOK_URL = null;
+  var PA_FLOW_ENDPOINT  = null;
+
+  var payload = {
+    sf_opp_id: oppId,
+    sf_acv: acvRaw,
+    sf_ad_spend: v('sf_ad_spend'),
+    spend_type: spendType,
+    sf_brands: v('sf_brands') || null,
+    services: svcs,
+    sf_notes: v('sf_notes') || null,
+    sf_kickoff: kickoff,
+    sf_golive: v('sf_golive') || null,
+    sf_peak: v('sf_peak') || null,
+    submitted_by_slack_id: SIMULATED_SLACK_USER.user_id,
+    submitted_by_slack_name: SIMULATED_SLACK_USER.user_name,
+    submitted_by_display_name: SIMULATED_SLACK_USER.display_name,
+    submitted_at: new Date().toISOString(),
+    status: 'Pending'
+  };
+
+  if(OBCOE_WEBHOOK_URL){
+    var msg='*MOB Pre-Discovery Intake*\n>Submitted by <@'+SIMULATED_SLACK_USER.user_id+'> | Opp ID: '+oppId+' | ACV: $'+Math.round(acvVal).toLocaleString()+'\n*Ad spend:* '+adSpend+' ('+spendType+')\n*Services:* '+svcs.join(', ')+'\n*Kickoff:* '+kickoff+(v('sf_golive')?' | *Go-live:* '+v('sf_golive'):'')+(v('sf_peak')?'\n*Peak/promo:* '+v('sf_peak'):'')+(v('sf_notes')?'\n*Notes:* '+v('sf_notes'):'');
+    fetch(OBCOE_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:msg})}).catch(function(){});
+  }
+  if(PA_FLOW_ENDPOINT){
+    fetch(PA_FLOW_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(function(){});
+  }
+
+  var confirmEl = document.getElementById('confirm_area');
+  confirmEl.innerHTML=
+    '<div class="confirm-box">'+
+    '<div class="confirm-head"><div class="confirm-dot"><svg viewBox="0 0 8 8" fill="none"><polyline points="1.5,4 3.5,6 6.5,2" stroke="#fff" stroke-width="1.5" fill="none"/></svg></div>'+
+    '<span class="confirm-title">Submitted — OBCOE will follow up to confirm scope</span></div>'+
+    '<div class="confirm-body">'+
+    '<strong>Submitted by:</strong> '+SIMULATED_SLACK_USER.display_name+' (@'+SIMULATED_SLACK_USER.user_name+')<br>'+
+    '<strong>Opp ID:</strong> '+oppId+'<br>'+
+    '<strong>ACV:</strong> $'+Math.round(acvVal).toLocaleString()+'<br>'+
+    '<strong>Ad spend:</strong> '+adSpend+' ('+spendType+')<br>'+
+    '<strong>Services:</strong> '+svcs.join(', ')+'<br>'+
+    '<strong>Kickoff:</strong> '+kickoff+(v('sf_golive')?' &nbsp;|&nbsp; <strong>Go-live:</strong> '+v('sf_golive'):'')+(v('sf_peak')?'<br><strong>Peak / promo:</strong> '+v('sf_peak'):'')+(v('sf_notes')?'<br><strong>Notes:</strong> '+v('sf_notes'):'')+
+    '<br><br>Do not quote MOB pricing without Gabby or Kyle\'s sign-off.'+
+    '<div class="payload-wrap"><div class="payload-head">Power Automate payload<span class="payload-note">→ Skill 3 / PA_FLOW_ENDPOINT</span></div>'+
+    '<div class="payload-body">'+JSON.stringify(payload,null,2)+'</div></div>'+
+    '</div></div>';
+
+  confirmEl.scrollIntoView({behavior:'smooth',block:'start'});
+  document.getElementById('submit_btn').disabled=true;
+}
+
+function resetForm(){
+  ['sf_opp_id','sf_acv','sf_ad_spend','sf_brands','sf_notes','sf_kickoff','sf_golive','sf_peak'].forEach(function(id){
+    var e=document.getElementById(id);if(e)e.value='';
+  });
+  document.querySelectorAll('#spend_tog .tc').forEach(function(c){c.classList.remove('on');});
+  document.querySelector('#spend_tog .tc[data-val="Total"]').classList.add('on');
+  document.querySelectorAll('#svc_group .sc').forEach(function(c){c.classList.remove('on');c.querySelector('input').checked=false;});
+  document.getElementById('acv_status').innerHTML='';
+  document.getElementById('reject_area').innerHTML='';
+  document.getElementById('confirm_area').innerHTML='';
+  document.getElementById('ts_card').classList.add('sdisabled');
+  document.getElementById('ts_note').style.display='block';
+  document.getElementById('submit_btn').disabled=false;
+  acvVal=0;
+}
+
+document.getElementById('id_avatar').textContent = getInitials(SIMULATED_SLACK_USER.display_name);
+document.getElementById('id_name').textContent = SIMULATED_SLACK_USER.display_name;
+document.getElementById('id_handle').textContent = '@'+SIMULATED_SLACK_USER.user_name;
+</script>
