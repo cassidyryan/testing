@@ -381,6 +381,7 @@ Pacvue OBCOE | Internal only`;
     `<br><br>Your email client should have opened with a pre-filled submission. If it did not, copy the details above and send manually to <a href="mailto:cassidy.ryan@pacvue.com" style="color:var(--bright)">cassidy.ryan@pacvue.com</a>.` +
     `<br><br>OBCOE will follow up to confirm scope. Do not quote pricing without Gabby or Kyle's sign-off.`;
 
+  document.getElementById('copy_content').textContent = body;
   document.getElementById('confirm_wrap').style.display = 'block';
   document.getElementById('confirm_wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
   document.getElementById('submit_btn').disabled = true;
