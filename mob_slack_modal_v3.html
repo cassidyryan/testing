@@ -356,7 +356,12 @@ Do not quote MOB pricing without Gabby or Kyle's sign-off.
 Pacvue OBCOE | Internal only`;
 
   const mailto = `mailto:cassidy.ryan@pacvue.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.location.href = mailto;
+  const mailLink = document.createElement('a');
+  mailLink.href = mailto;
+  mailLink.target = '_blank';
+  document.body.appendChild(mailLink);
+  mailLink.click();
+  document.body.removeChild(mailLink);
 
   const confirmBody = document.getElementById('confirm_body');
   confirmBody.innerHTML =
