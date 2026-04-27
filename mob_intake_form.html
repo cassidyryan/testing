@@ -61,7 +61,6 @@ body{font-family:'Poppins',sans-serif;background:transparent}
 .svc-tier-note{font-size:11px;color:var(--color-text-secondary,#888);margin-top:6px;line-height:1.5}
 .sf-link-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}
 .sf-badge{font-size:10px;font-weight:500;padding:4px 10px;border-radius:20px;background:#e8f1fb;color:var(--blue);white-space:nowrap}
-
 .submit-bar{margin-top:2rem;padding-top:1.5rem;border-top:.5px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
 .btn-clear{padding:9px 18px;font-size:13px;font-family:'Poppins',sans-serif;border:.5px solid var(--border);border-radius:6px;background:transparent;color:var(--color-text-secondary,#888);cursor:pointer}
 .btn-submit{padding:10px 28px;font-size:13px;font-weight:500;font-family:'Poppins',sans-serif;background:var(--navy);border:none;border-radius:6px;color:#fff;cursor:pointer;transition:background .15s}
@@ -306,20 +305,23 @@ function getRadio(groupId) {
 function v(id) { const e = document.getElementById(id); return e ? e.value.trim() : ''; }
 
 function submitForm() {
-  const client   = v('sf_client_name');
-  const acvRaw   = v('sf_acv');
-  const opp      = getRadio('opp_group');
-  const spend    = v('sf_ad_spend');
+  const client    = v('sf_client_name');
+  const acvRaw    = v('sf_acv');
+  const opp       = getRadio('opp_group');
+  const sfUrl     = v('sf_opp_url');
+  const spend     = v('sf_ad_spend');
   const spendType = getRadio('spend_group');
-  const markets  = v('sf_markets');
+  const markets   = v('sf_markets');
   const retailers = v('sf_retailers');
-  const brands   = v('sf_brands');
-  const prods    = getChecked('prod_group');
-  const svcs     = getChecked('svc_group');
-  const kickoff  = v('sf_kickoff');
+  const brands    = v('sf_brands');
+  const prods     = getChecked('prod_group');
+  const svcs      = getChecked('svc_group');
+  const kickoff   = v('sf_kickoff');
+  const golive    = v('sf_golive');
+  const peak      = v('sf_peak');
+  const notes     = v('sf_notes');
 
-
-  if (!client || !acvRaw || !opp || !spend || !sfUrl || !markets || !retailers || prods.length === 0 || svcs.length === 0 || !kickoff) {
+  if (!client || !acvRaw || !opp || !sfUrl || !spend || !markets || !retailers || prods.length === 0 || svcs.length === 0 || !kickoff) {
     alert('Please complete all required fields before submitting.');
     return;
   }
@@ -329,12 +331,6 @@ function submitForm() {
     return;
   }
 
-
-  const sfUrl   = v('sf_opp_url');
-  const golive  = v('sf_golive');
-  const peak    = v('sf_peak');
-  const notes   = v('sf_notes');
-
   const subject = `MOB Pre-Discovery Intake — ${client}`;
 
   const body =
@@ -342,7 +338,8 @@ function submitForm() {
 -------
 Client: ${client}
 ACV: ${acvRaw}
-Opportunity type: ${opp}${sfUrl ? '\nSFDC link: ' + sfUrl : ''}
+Opportunity type: ${opp}
+SFDC link: ${sfUrl}
 
 SCOPE
 -----
@@ -362,10 +359,7 @@ Submitted: ${new Date().toLocaleString()}
 Do not quote MOB pricing without Gabby or Kyle's sign-off.
 Pacvue OBCOE | Internal only`;
 
-
-
-  const mailto = `mailto:cassidy.ryan@pacvue.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.location.href = mailto;
+  window.location.href = `mailto:cassidy.ryan@pacvue.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
   const confirmBody = document.getElementById('confirm_body');
   confirmBody.innerHTML =
@@ -378,10 +372,10 @@ Pacvue OBCOE | Internal only`;
     `<strong>Expected kickoff:</strong> ${kickoff}` +
     (golive ? ` &nbsp;|&nbsp; <strong>Goal go-live:</strong> ${golive}` : '') +
     (peak ? `<br><strong>Peak / promo:</strong> ${peak}` : '') +
-
-    (sfUrl ? `<br><strong>SFDC opportunity:</strong> <a href="${sfUrl}" target="_blank" style="color:var(--bright)">View in Salesforce</a>` : '') +
-    `<br><br>Your email client should have opened with a pre-filled submission. If it did not, copy the details above and send manually to <a href="mailto:cassidy.ryan@pacvue.com" style="color:var(--bright)">cassidy.ryan@pacvue.com</a>.` +
-    `<br><br>OBCOE will follow up to confirm scope. Do not quote pricing without Gabby or Kyle's sign-off.`;
+    `<br><strong>SFDC:</strong> <a href="${sfUrl}" target="_blank" style="color:var(--bright)">View opportunity</a>` +
+    `<br><br>Your email client should have opened with a pre-filled submission. If it did not, copy the email body below and send to <a href="mailto:cassidy.ryan@pacvue.com" style="color:var(--bright)">cassidy.ryan@pacvue.com</a> with subject: <strong>${subject}</strong>` +
+    `<br><br>OBCOE will follow up to confirm scope. Do not quote pricing without Gabby or Kyle's sign-off.` +
+    `<div class="copy-block"><div class="copy-block-head"><span class="copy-block-label">Email body</span><button class="copy-btn" id="copy_btn" onclick="copyEmail()">Copy</button></div><div class="copy-content" id="copy_content"></div></div>`;
 
   document.getElementById('copy_content').textContent = body;
   document.getElementById('confirm_wrap').style.display = 'block';
@@ -415,7 +409,6 @@ function clearForm() {
   document.querySelectorAll('.rcard.on').forEach(el => el.classList.remove('on'));
   document.querySelectorAll('#spend_group .rcard').forEach(el => { if (el.dataset.val === 'Total') el.classList.add('on'); });
   document.querySelectorAll('.prod-card.on, .svc-card.on').forEach(el => { el.classList.remove('on'); el.querySelector('input').checked = false; });
-
   acvVal = 0;
   document.getElementById('acv_feedback').className = 'acv-feedback';
   document.getElementById('ts_card').classList.add('svc-locked');
