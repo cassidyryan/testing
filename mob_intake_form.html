@@ -359,7 +359,7 @@ Submitted: ${new Date().toLocaleString()}
 Do not quote MOB pricing without Gabby or Kyle's sign-off.
 Pacvue OBCOE | Internal only`;
 
-  window.location.href = `mailto:cassidy.ryan@pacvue.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = `mailto:managedonboarding@pacvue.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
   const confirmBody = document.getElementById('confirm_body');
   confirmBody.innerHTML =
@@ -373,7 +373,7 @@ Pacvue OBCOE | Internal only`;
     (golive ? ` &nbsp;|&nbsp; <strong>Goal go-live:</strong> ${golive}` : '') +
     (peak ? `<br><strong>Peak / promo:</strong> ${peak}` : '') +
     `<br><strong>SFDC:</strong> <a href="${sfUrl}" target="_blank" style="color:var(--bright)">View opportunity</a>` +
-    `<br><br>Your email client should have opened with a pre-filled submission. If it did not, copy the email body below and send to <a href="mailto:cassidy.ryan@pacvue.com" style="color:var(--bright)">cassidy.ryan@pacvue.com</a> with subject: <strong>${subject}</strong>` +
+    `<br><br>Your email client should have opened with a pre-filled submission. If it did not, copy the email body below and send to <a href="mailto:managedonboarding@pacvue.com" style="color:var(--bright)">managedonboarding@pacvue.com</a> with subject: <strong>${subject}</strong>` +
     `<br><br>OBCOE will follow up to confirm scope. Do not quote pricing without Gabby or Kyle's sign-off.` +
     `<div class="copy-block"><div class="copy-block-head"><span class="copy-block-label">Email body</span><button class="copy-btn" id="copy_btn" onclick="copyEmail()">Copy</button></div><div class="copy-content" id="copy_content"></div></div>`;
 
