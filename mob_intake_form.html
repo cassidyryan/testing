@@ -1,21 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOB Pre-Discovery Intake</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--navy:#003873;--blue:#0253B6;--bright:#0A6FE8;--orange:#F47F46;--teal:#08C5A2;--light-bg:#EEF9FF;--border:#d0e8f5}
+:root{--navy:#003873;--blue:#0253B6;--bright:#0A6FE8;--orange:#F47F46;--teal:#08C5A2;--light-bg:#EEF9FF;--border:#d0e8f5;--commerce:#C85A00;--commerce-light:#fff4ed;--commerce-border:#f5c4a0}
 body{font-family:'Poppins',sans-serif;background:transparent}
 .page{max-width:820px;margin:0 auto;padding:0 0 4rem}
 .form-header{background:var(--navy);border-radius:10px 10px 0 0;padding:22px 32px 20px;position:relative;overflow:hidden}
 .form-header::before{content:'';position:absolute;top:-30px;right:-30px;width:140px;height:140px;border-radius:50%;background:var(--bright);opacity:.12}
 .form-header::after{content:'';position:absolute;bottom:-20px;right:60px;width:80px;height:80px;border-radius:50%;background:var(--teal);opacity:.1}
 .header-eyebrow{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
-.header-title{font-size:20px;font-weight:300;color:#fff;margin-bottom:6px}
+.header-title{font-size:20px;font-weight:700;color:#fff;margin-bottom:6px}
 .header-title span{color:var(--orange);font-weight:500}
 .header-sub{font-size:12px;color:rgba(255,255,255,.55);line-height:1.6}
 .header-sub .req-note{color:#ff6b6b}
 .orange-bar{height:3px;background:var(--orange)}
 .form-body{background:var(--color-background-primary,#fff);border:.5px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:26px 32px 30px}
-.section-label{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);padding-bottom:7px;border-bottom:1.5px solid var(--bright);margin-bottom:1.25rem;margin-top:2rem}
+.section-label{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--orange);padding-bottom:7px;border-bottom:1.5px solid var(--bright);margin-bottom:1.25rem;margin-top:2rem}
 .section-label:first-of-type{margin-top:0}
+.section-label.commerce-label{color:var(--commerce);border-bottom-color:var(--commerce)}
 .section-note{font-size:11.5px;color:var(--color-text-secondary,#888);margin-bottom:1rem;margin-top:-8px;line-height:1.5}
 .section-note a{color:var(--bright);text-decoration:none}
 .field{margin-bottom:1.2rem}
@@ -32,16 +39,20 @@ body{font-family:'Poppins',sans-serif;background:transparent}
 .rcard{border:.5px solid var(--border);border-radius:6px;padding:10px 12px;cursor:pointer;text-align:center;transition:border-color .15s,background .15s;display:flex;align-items:center;justify-content:center}
 .rcard:hover{border-color:var(--bright)}
 .rcard.on{border-color:var(--bright);background:#f0f6ff}
-.rcard .rc-label{font-size:12.5px;font-weight:500;color:var(--navy)}
+.rcard .rc-label{font-size:11.5px;font-weight:500;color:var(--navy);white-space:nowrap}
 .rcard input{display:none}
+#opp_group .rcard{padding:10px 6px}
 .spend-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,200px);gap:14px;align-items:end}
 .spend-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .spend-toggle .rcard{padding:9px 8px}
 .prod-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.prod-card{border:.5px solid var(--border);border-radius:6px;padding:10px 12px;cursor:pointer;text-align:center;transition:border-color .15s,background .15s;display:flex;align-items:center;justify-content:center}
+.prod-card{border:.5px solid var(--border);border-radius:6px;padding:10px 12px;cursor:pointer;text-align:center;transition:border-color .15s,background .15s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
 .prod-card:hover{border-color:var(--bright)}
 .prod-card.on{border-color:var(--bright);background:#f0f6ff}
+.prod-card.commerce-card:hover{border-color:var(--commerce)}
+.prod-card.commerce-card.on{border-color:var(--commerce);background:var(--commerce-light)}
 .prod-card .pc-label{font-size:13px;font-weight:500;color:var(--navy)}
+.prod-card .pc-sub{font-size:10.5px;color:var(--color-text-secondary,#888)}
 .prod-card input{display:none}
 .svc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
 .svc-card{border:.5px solid var(--border);border-radius:6px;padding:11px 13px;cursor:pointer;transition:border-color .15s,background .15s}
@@ -81,17 +92,64 @@ body{font-family:'Poppins',sans-serif;background:transparent}
 .copy-btn:hover{background:var(--blue)}
 .copy-btn.copied{background:#2ecc71}
 .copy-content{padding:10px 12px;font-family:monospace;font-size:11.5px;color:var(--color-text-primary,#222);line-height:1.7;white-space:pre-wrap;word-break:break-word;max-height:220px;overflow-y:auto;background:var(--color-background-primary,#fff)}
-</style>
 
+/* Conditional section panels */
+.conditional-section{display:none}
+.conditional-section.visible{display:block}
+
+/* Seller type radio — 3-col */
+.seller-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+
+/* Scope panels — banded containers for Ads and Commerce */
+.scope-panel{border-radius:8px;overflow:hidden;margin-bottom:1rem}
+.scope-panel-head{display:flex;align-items:center;gap:10px;padding:9px 16px}
+.scope-panel-icon{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.scope-panel-title{font-size:10px;font-weight:500;letter-spacing:.09em;text-transform:uppercase}
+.scope-panel-body{padding:16px 16px 4px}
+
+.ads-panel .scope-panel-head{background:#e8f1fb;border-bottom:.5px solid #c2d9f5}
+.ads-panel .scope-panel-icon{background:var(--blue)}
+.ads-panel .scope-panel-title{color:var(--blue)}
+.ads-panel{border:.5px solid #c2d9f5}
+
+.commerce-panel .scope-panel-head{background:var(--commerce-light);border-bottom:.5px solid var(--commerce-border)}
+.commerce-panel .scope-panel-icon{background:var(--commerce)}
+.commerce-panel .scope-panel-title{color:var(--commerce)}
+.commerce-panel{border:.5px solid var(--commerce-border)}
+
+/* Commerce card hover/selected in orange */
+.prod-card.commerce-card:hover{border-color:var(--commerce)}
+.prod-card.commerce-card.on{border-color:var(--commerce);background:var(--commerce-light)}
+
+/* Locked scope panels — greyed out when ACV fails */
+.scope-panel.panel-locked{opacity:.35;pointer-events:none;cursor:not-allowed;filter:grayscale(.4)}
+.acv-panel.panel-locked{opacity:.35;pointer-events:none;cursor:not-allowed}
+
+/* ACV panel inline with scope panels */
+.acv-panel{border-radius:8px;overflow:hidden;margin-bottom:.75rem}
+.acv-panel-head{display:flex;align-items:center;gap:10px;padding:8px 16px}
+.acv-panel-body{padding:12px 16px 4px}
+.ads-acv-panel .acv-panel-head{background:#e8f1fb;border-bottom:.5px solid #c2d9f5}
+.ads-acv-panel .acv-panel-icon{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0}
+.ads-acv-panel .acv-panel-title{font-size:10px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--blue)}
+.ads-acv-panel{border:.5px solid #c2d9f5}
+.commerce-acv-panel .acv-panel-head{background:var(--commerce-light);border-bottom:.5px solid var(--commerce-border)}
+.commerce-acv-panel .acv-panel-icon{width:6px;height:6px;border-radius:50%;background:var(--commerce);flex-shrink:0}
+.commerce-acv-panel .acv-panel-title{font-size:10px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--commerce)}
+.commerce-acv-panel{border:.5px solid var(--commerce-border)}
+</style>
+</head>
+<body>
 <div class="page">
   <div class="form-header">
-    <div class="header-eyebrow">Managed Onboarding</div>
-    <div class="header-title">MOB <span>Pre-Discovery Intake</span></div>
-    <div class="header-sub">Complete before engaging OBCOE. Do not pitch MOB to a client without Onboarding involvement. <span class="req-note">All fields marked * are required.</span></div>
+    <div class="header-title">Managed Onboarding Pre-Discovery Intake</div>
+    <div class="header-sub">Complete before engaging OBCOE. Do not pitch MOB to a client without Onboarding involvement.</div>
+    <div class="header-sub" style="margin-top:5px"><span class="req-note">All fields marked * are required.</span></div>
   </div>
   <div class="orange-bar"></div>
   <div class="form-body">
 
+    <!-- ─── ACCOUNT ─────────────────────────────────────── -->
     <div class="section-label">Account</div>
 
     <div class="grid2">
@@ -100,101 +158,178 @@ body{font-family:'Poppins',sans-serif;background:transparent}
         <input type="text" id="sf_client_name" placeholder="e.g. Acme Corp">
       </div>
       <div class="field">
-        <label>ACV <span class="req">*</span></label>
-        <div class="hint">Drives service eligibility. Enter numeric value.</div>
-        <input type="text" id="sf_acv" placeholder="e.g. 350000" oninput="evalAcv()">
-        <div class="acv-feedback" id="acv_feedback"></div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Opportunity type <span class="req">*</span></label>
-      <div class="radio-row" id="opp_group">
-        <div class="rcard" data-val="New logo" onclick="pickRadio('opp_group',this)"><input type="radio" name="opp"><div class="rc-label">New logo</div></div>
-        <div class="rcard" data-val="Expansion" onclick="pickRadio('opp_group',this)"><input type="radio" name="opp"><div class="rc-label">Expansion</div></div>
-        <div class="rcard" data-val="Agency transition" onclick="pickRadio('opp_group',this)"><input type="radio" name="opp"><div class="rc-label">Agency transition</div></div>
+        <label>Opportunity type <span class="req">*</span></label>
+        <div class="radio-row" id="opp_group" style="margin-top:2px">
+          <div class="rcard" data-val="New logo" onclick="pickRadio('opp_group',this)"><div class="rc-label">New logo</div></div>
+          <div class="rcard" data-val="Expansion" onclick="pickRadio('opp_group',this)"><div class="rc-label">Expansion</div></div>
+          <div class="rcard" data-val="Agency support" onclick="pickRadio('opp_group',this)"><div class="rc-label">Agency support</div></div>
+        </div>
       </div>
     </div>
 
     <div class="field">
       <label>Salesforce opportunity link <span class="req">*</span></label>
-      <div class="sf-link-row">
-        <input type="url" id="sf_opp_url" placeholder="https://pacvue.lightning.force.com/lightning/r/Opportunity/...">
-        <span class="sf-badge">SFDC</span>
-      </div>
+      <input type="url" id="sf_opp_url" placeholder="https://pacvue.lightning.force.com/lightning/r/Opportunity/...">
     </div>
 
-    <div class="section-label">Scope</div>
+    <!-- ─── PRODUCTS IN SCOPE ────────────────────────────── -->
+    <div class="section-label">Products in scope</div>
 
     <div class="field">
-      <label>Estimated ad spend under management <span class="req">*</span></label>
-      <div class="hint">Enter the figure and specify whether it is total or monthly.</div>
-      <div class="spend-row">
-        <input type="text" id="sf_ad_spend" placeholder="e.g. 500000">
-        <div class="spend-toggle" id="spend_group">
-          <div class="rcard on" data-val="Total" onclick="pickRadio('spend_group',this)"><div class="rc-label">Total</div></div>
-          <div class="rcard" data-val="Monthly" onclick="pickRadio('spend_group',this)"><div class="rc-label">Monthly</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid3">
-      <div class="field">
-        <label>No. of markets <span class="req">*</span></label>
-        <input type="number" id="sf_markets" min="1" placeholder="e.g. 2">
-      </div>
-      <div class="field">
-        <label>No. of retailers <span class="req">*</span></label>
-        <input type="number" id="sf_retailers" min="1" placeholder="e.g. 4">
-      </div>
-      <div class="field">
-        <label>No. of brands / cohorts <span class="opt">(optional)</span></label>
-        <input type="number" id="sf_brands" min="1" placeholder="e.g. 3">
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Pacvue products in scope <span class="req">*</span></label>
-      <div class="hint">Select all that apply.</div>
+      <div class="hint">Select all that apply. Scope fields below will adjust based on your selection.</div>
       <div class="prod-row" id="prod_group">
-        <div class="prod-card" data-val="Search" onclick="toggleCheck(this)"><input type="checkbox"><div class="pc-label">Search</div></div>
-        <div class="prod-card" data-val="DSP" onclick="toggleCheck(this)"><input type="checkbox"><div class="pc-label">DSP</div></div>
-        <div class="prod-card" data-val="Commerce" onclick="toggleCheck(this)"><input type="checkbox"><div class="pc-label">Commerce</div></div>
+        <div class="prod-card" data-val="Search" onclick="toggleProd(this)"><input type="checkbox"><div class="pc-label">Search</div></div>
+        <div class="prod-card" data-val="DSP" onclick="toggleProd(this)"><input type="checkbox"><div class="pc-label">DSP</div></div>
+        <div class="prod-card commerce-card" data-val="Commerce" onclick="toggleProd(this)"><input type="checkbox"><div class="pc-label">Commerce</div></div>
       </div>
     </div>
 
-    <div class="section-label">Services needed</div>
-    <div class="section-note">For more details, refer to the <a href="https://app.spekit.co/app/wiki/asset/48539711-d69e-46a5-b223-2a0c4de93e21?type=asset&expanded=true" target="_blank">MOB Spekit article</a>.</div>
-
-    <div class="field">
-      <label>Select all that apply <span class="req">*</span></label>
-      <div class="svc-grid" id="svc_group">
-        <div class="svc-card" data-val="MOB setup" onclick="toggleSvc(this)">
-          <div class="sc-row"><input type="checkbox"><span class="sc-label">MOB setup</span></div>
-          <div class="sc-desc">Full foundational buildout — automation, rules, tagging, SOV config, and temporary ops coverage.</div>
-        </div>
-        <div class="svc-card" data-val="Restructure" onclick="toggleSvc(this)">
-          <div class="sc-row"><input type="checkbox"><span class="sc-label">Restructure</span></div>
-          <div class="sc-desc">Performance audit and full campaign rebuild for accounts with legacy structures that need a clean start.</div>
-        </div>
-        <div class="svc-card svc-locked" id="ts_card" data-val="Transitional services" onclick="toggleSvc(this)">
-          <div class="sc-row"><input type="checkbox"><span class="sc-label">Transitional services</span></div>
-          <div class="sc-desc">MOB setup plus temporary Pacvue-managed account operations during an agency transition or platform switch.</div>
-        </div>
-        <div class="svc-card" data-val="Unsure — defer to MOB" onclick="toggleSvc(this)">
-          <div class="sc-row"><input type="checkbox"><span class="sc-label">Unsure — defer to MOB</span></div>
-          <div class="sc-desc">Unsure of services needed. MOB will assess during discovery.</div>
+    <!-- ─── ACV BLOCK — renders dynamically ─────────────── -->
+    <div id="acv_block">
+      <!-- Ads ACV — shown when Search or DSP selected -->
+      <div class="conditional-section" id="ads_acv_section">
+        <div class="acv-panel ads-acv-panel">
+          <div class="acv-panel-head">
+            <div class="acv-panel-icon"></div>
+            <span class="acv-panel-title">Ads ACV — Search / DSP</span>
+          </div>
+          <div class="acv-panel-body">
+            <div class="field">
+              <label>ACV <span class="req">*</span></label>
+              <div class="hint">$200K minimum. Drives service eligibility. Transitional Services unlocks at $400K+.</div>
+              <input type="text" id="sf_acv_ads" placeholder="e.g. 350000" oninput="evalAcv()">
+              <div class="acv-feedback" id="acv_feedback_ads"></div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="svc-tier-note" id="ts_note">Transitional Services requires $400K+ ACV.</div>
+
+      <!-- Commerce ACV — shown when Commerce selected -->
+      <div class="conditional-section" id="commerce_acv_section">
+        <div class="acv-panel commerce-acv-panel">
+          <div class="acv-panel-head">
+            <div class="acv-panel-icon"></div>
+            <span class="acv-panel-title">Commerce ACV</span>
+          </div>
+          <div class="acv-panel-body">
+            <div class="field">
+              <label>ACV <span class="req">*</span></label>
+              <div class="hint">$100K minimum.</div>
+              <input type="text" id="sf_acv_commerce" placeholder="e.g. 120000" oninput="evalAcv()">
+              <div class="acv-feedback" id="acv_feedback_commerce"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="field">
+    <!-- ─── SCOPE ─────────────────────────────────────────── -->
+    <div class="section-label">Scope</div>
+    <div class="section-note">Informs onboarding complexity, pricing, resources, and feasibility.</div>
+
+    <!-- ADS SCOPE — shown when Search or DSP selected -->
+    <div class="conditional-section" id="ads_scope_section">
+      <div class="scope-panel ads-panel">
+        <div class="scope-panel-head">
+          <div class="scope-panel-icon"></div>
+          <span class="scope-panel-title">Ads scope — Search / DSP</span>
+        </div>
+        <div class="scope-panel-body">
+          <div class="field">
+            <label>Estimated ad spend under management <span class="req">*</span></label>
+            <div class="spend-row">
+              <input type="text" id="sf_ad_spend" placeholder="e.g. 500000">
+              <div class="spend-toggle" id="spend_group">
+                <div class="rcard on" data-val="Total" onclick="pickRadio('spend_group',this)"><div class="rc-label">Total</div></div>
+                <div class="rcard" data-val="Monthly" onclick="pickRadio('spend_group',this)"><div class="rc-label">Monthly</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="grid3">
+            <div class="field">
+              <label>No. of markets <span class="req">*</span></label>
+              <input type="number" id="sf_markets_ads" min="1" placeholder="e.g. 2">
+            </div>
+            <div class="field">
+              <label>No. of retailers <span class="req">*</span></label>
+              <input type="number" id="sf_retailers_ads" min="1" placeholder="e.g. 4">
+            </div>
+            <div class="field">
+              <label>No. of brands / cohorts <span class="opt">(optional)</span></label>
+              <input type="number" id="sf_brands" min="1" placeholder="e.g. 3">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMMERCE SCOPE — shown when Commerce selected -->
+    <div class="conditional-section" id="commerce_scope_section">
+      <div class="scope-panel commerce-panel">
+        <div class="scope-panel-head">
+          <div class="scope-panel-icon"></div>
+          <span class="scope-panel-title">Commerce scope</span>
+        </div>
+        <div class="scope-panel-body">
+          <div class="field">
+            <label>Seller type <span class="req">*</span></label>
+            <div class="seller-row" id="seller_group">
+              <div class="rcard" data-val="1P" onclick="pickRadio('seller_group',this)"><div class="rc-label">1P</div></div>
+              <div class="rcard" data-val="3P" onclick="pickRadio('seller_group',this)"><div class="rc-label">3P</div></div>
+              <div class="rcard" data-val="Hybrid" onclick="pickRadio('seller_group',this)"><div class="rc-label">Hybrid</div></div>
+            </div>
+          </div>
+          <div class="grid2">
+            <div class="field">
+              <label>No. of markets <span class="req">*</span></label>
+              <input type="number" id="sf_markets_commerce" min="1" placeholder="e.g. 2">
+            </div>
+            <div class="field">
+              <label>No. of retailers <span class="req">*</span></label>
+              <input type="number" id="sf_retailers_commerce" min="1" placeholder="e.g. 4">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SERVICES — Ads only ───────────────────────────── -->
+    <div class="conditional-section" id="services_section">
+      <div class="section-label">Services needed <span style="font-size:9px;font-weight:500;letter-spacing:.06em;color:var(--blue);background:#e8f1fb;padding:2px 8px;border-radius:20px;border:.5px solid #c2d9f5;margin-left:6px;vertical-align:middle;text-transform:none">Ads only</span></div>
+      <div class="section-note">For more details, refer to the <a href="https://app.spekit.co/app/wiki/asset/48539711-d69e-46a5-b223-2a0c4de93e21?type=asset&expanded=true" target="_blank">MOB Spekit article</a>.</div>
+
+      <div class="field">
+        <label>Select all that apply <span class="req">*</span></label>
+        <div class="svc-grid" id="svc_group">
+          <div class="svc-card" data-val="MOB setup" onclick="toggleSvc(this)">
+            <div class="sc-row"><input type="checkbox"><span class="sc-label">MOB setup</span></div>
+            <div class="sc-desc">Full foundational buildout — automation, rules, tagging, SOV config, and temporary ops coverage.</div>
+          </div>
+          <div class="svc-card" data-val="Restructure" onclick="toggleSvc(this)">
+            <div class="sc-row"><input type="checkbox"><span class="sc-label">Restructure</span></div>
+            <div class="sc-desc">Performance audit and full campaign rebuild for accounts with legacy structures that need a clean start.</div>
+          </div>
+          <div class="svc-card svc-locked" id="ts_card" data-val="Transitional services" onclick="toggleSvc(this)">
+            <div class="sc-row"><input type="checkbox"><span class="sc-label">Transitional services</span></div>
+            <div class="sc-desc">MOB setup plus temporary Pacvue-managed account operations during an agency transition or platform switch.</div>
+          </div>
+          <div class="svc-card" data-val="Unsure — defer to MOB" onclick="toggleSvc(this)">
+            <div class="sc-row"><input type="checkbox"><span class="sc-label">Unsure — defer to MOB</span></div>
+            <div class="sc-desc">Unsure of services needed. MOB will assess during discovery.</div>
+          </div>
+        </div>
+        <div class="svc-tier-note" id="ts_note">Transitional Services requires $400K+ Ads ACV.</div>
+      </div>
+    </div>
+
+    <!-- ─── NOTES ─────────────────────────────────────────── -->
+    <div class="field" style="margin-top:1.5rem">
       <label>Additional notes <span class="opt">(optional)</span></label>
-      <div class="hint">Migration scope, complexity, legacy structure details, or anything else MOB should know before the discovery call.</div>
+      <div class="hint">Migration scope, complexity, legacy structure, seller setup details, or anything else MOB should know before the discovery call.</div>
       <textarea id="sf_notes" placeholder="e.g. Client is transitioning from Skai with 3 years of historical data. Agency-of-record is still running the account through end of quarter."></textarea>
     </div>
 
+    <!-- ─── TIMELINE ───────────────────────────────────────── -->
     <div class="section-label">Timeline</div>
 
     <div class="grid2">
@@ -235,56 +370,183 @@ body{font-family:'Poppins',sans-serif;background:transparent}
 </div>
 
 <script>
-let acvVal = 0;
+// ─── State ───────────────────────────────────────────────
+let acvAdsVal = 0;
+let acvCommerceVal = 0;
 
+function hasAds() {
+  return Array.from(document.querySelectorAll('#prod_group .prod-card.on'))
+    .some(c => c.dataset.val === 'Search' || c.dataset.val === 'DSP');
+}
+
+function hasCommerce() {
+  return Array.from(document.querySelectorAll('#prod_group .prod-card.on'))
+    .some(c => c.dataset.val === 'Commerce');
+}
+
+// ─── Product selection ───────────────────────────────────
+function toggleProd(el) {
+  el.classList.toggle('on');
+  el.querySelector('input[type=checkbox]').checked = el.classList.contains('on');
+  updateSections();
+  evalAcv();
+}
+
+function updateSections() {
+  const ads = hasAds();
+  const commerce = hasCommerce();
+
+  toggle('ads_acv_section', ads);
+  toggle('commerce_acv_section', commerce);
+  toggle('ads_scope_section', ads);
+  toggle('commerce_scope_section', commerce);
+  toggle('services_section', ads);
+
+  // reset ACV state when a product is deselected
+  if (!ads) {
+    acvAdsVal = 0;
+    resetFeedback('acv_feedback_ads');
+  }
+  if (!commerce) {
+    acvCommerceVal = 0;
+    resetFeedback('acv_feedback_commerce');
+  }
+
+  evalSubmitState();
+}
+
+function toggle(id, show) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('visible', show);
+}
+
+function resetFeedback(id) {
+  const el = document.getElementById(id);
+  if (el) el.className = 'acv-feedback';
+}
+
+// ─── ACV evaluation ──────────────────────────────────────
 function evalAcv() {
-  const raw = document.getElementById('sf_acv').value.replace(/[^0-9.]/g, '');
-  acvVal = parseFloat(raw) || 0;
-  const fb = document.getElementById('acv_feedback');
+  if (hasAds()) evalAdsAcv();
+  if (hasCommerce()) evalCommerceAcv();
+  evalSubmitState();
+}
+
+function evalAdsAcv() {
+  const raw = document.getElementById('sf_acv_ads').value.replace(/[^0-9.]/g, '');
+  acvAdsVal = parseFloat(raw) || 0;
+  const fb = document.getElementById('acv_feedback_ads');
   const tsCard = document.getElementById('ts_card');
   const tsNote = document.getElementById('ts_note');
-  const btn = document.getElementById('submit_btn');
+
+  fb.className = 'acv-feedback';
+
+  // Lock/unlock the Ads scope panel based on ACV
+  const adsScopePanel = document.querySelector('#ads_scope_section .scope-panel');
+  const servicesSect = document.getElementById('services_section');
+
+  if (!raw) {
+    fb.classList.remove('show');
+    lockTs(tsCard);
+    if (adsScopePanel) adsScopePanel.classList.add('panel-locked');
+    if (servicesSect) servicesSect.style.opacity = '.35';
+    if (servicesSect) servicesSect.style.pointerEvents = 'none';
+    lockPanelInputs(adsScopePanel, true);
+    lockPanelInputs(servicesSect, true);
+    return;
+  }
+
+  if (acvAdsVal < 200000) {
+    fb.classList.add('show', 'acv-block');
+    fb.innerHTML = `Ads ACV below the $200K minimum — the Ads scope fields and services are locked. Review eligibility: <a href="https://app.spekit.co/app/wiki/asset/48539711-d69e-46a5-b223-2a0c4de93e21?type=asset&expanded=true" target="_blank">Spekit — MOB Services &amp; Pricing</a>. If you believe this is an error, contact <strong>Gabby Clarke</strong> or <strong>Kyle Kirkwood</strong>.`;
+    lockTs(tsCard);
+    if (adsScopePanel) adsScopePanel.classList.add('panel-locked');
+    if (servicesSect) { servicesSect.style.opacity = '.35'; servicesSect.style.pointerEvents = 'none'; }
+    lockPanelInputs(adsScopePanel, true);
+    lockPanelInputs(servicesSect, true);
+  } else if (acvAdsVal < 400000) {
+    fb.classList.add('show', 'acv-warn');
+    fb.innerHTML = `$200K–$399K — MOB Setup and Restructure only. Transitional Services requires $400K+.`;
+    lockTs(tsCard);
+    tsNote.style.display = 'block';
+    if (adsScopePanel) adsScopePanel.classList.remove('panel-locked');
+    if (servicesSect) { servicesSect.style.opacity = ''; servicesSect.style.pointerEvents = ''; }
+    lockPanelInputs(adsScopePanel, false);
+    lockPanelInputs(servicesSect, false);
+  } else {
+    fb.classList.add('show', 'acv-ok');
+    fb.innerHTML = `$400K+ — all Ads services eligible.`;
+    tsCard.classList.remove('svc-locked');
+    tsNote.style.display = 'none';
+    if (adsScopePanel) adsScopePanel.classList.remove('panel-locked');
+    if (servicesSect) { servicesSect.style.opacity = ''; servicesSect.style.pointerEvents = ''; }
+    lockPanelInputs(adsScopePanel, false);
+    lockPanelInputs(servicesSect, false);
+  }
+}
+
+function evalCommerceAcv() {
+  const raw = document.getElementById('sf_acv_commerce').value.replace(/[^0-9.]/g, '');
+  acvCommerceVal = parseFloat(raw) || 0;
+  const fb = document.getElementById('acv_feedback_commerce');
+  const commerceScopePanel = document.querySelector('#commerce_scope_section .scope-panel');
 
   fb.className = 'acv-feedback';
 
   if (!raw) {
     fb.classList.remove('show');
-    tsCard.classList.add('svc-locked');
-    if (tsCard.classList.contains('on')) { tsCard.classList.remove('on'); tsCard.querySelector('input').checked = false; }
-    btn.disabled = false;
+    if (commerceScopePanel) commerceScopePanel.classList.add('panel-locked');
+    lockPanelInputs(commerceScopePanel, true);
     return;
   }
 
-  if (acvVal < 200000) {
+  if (acvCommerceVal < 100000) {
     fb.classList.add('show', 'acv-block');
-    fb.innerHTML = `This opportunity does not meet the $200K minimum for MOB. Submission is blocked.<br>Review eligibility: <a href="https://app.spekit.co/app/wiki/asset/48539711-d69e-46a5-b223-2a0c4de93e21?type=asset&expanded=true" target="_blank">Spekit — MOB Services &amp; Pricing</a><br>If you believe this is an error, contact <strong>Gabby Clarke</strong> or <strong>Kyle Kirkwood</strong> before resubmitting.`;
-    tsCard.classList.add('svc-locked');
-    if (tsCard.classList.contains('on')) { tsCard.classList.remove('on'); tsCard.querySelector('input').checked = false; }
-    btn.disabled = true;
-  } else if (acvVal < 400000) {
-    fb.classList.add('show', 'acv-warn');
-    fb.innerHTML = `$200K–$399K — MOB Setup and Restructure only. Transitional Services requires $400K+.`;
-    tsCard.classList.add('svc-locked');
-    if (tsCard.classList.contains('on')) { tsCard.classList.remove('on'); tsCard.querySelector('input').checked = false; }
-    tsNote.style.display = 'block';
-    btn.disabled = false;
+    fb.innerHTML = `Commerce ACV below the $100K minimum — the Commerce scope fields are locked. Review eligibility: <a href="https://app.spekit.co/app/wiki/asset/48539711-d69e-46a5-b223-2a0c4de93e21?type=asset&expanded=true" target="_blank">Spekit — MOB Services &amp; Pricing</a>. If you believe this is an error, contact <strong>Clay Bleyer</strong> or <strong>Kyle Kirkwood</strong> before proceeding.`;
+    if (commerceScopePanel) commerceScopePanel.classList.add('panel-locked');
+    lockPanelInputs(commerceScopePanel, true);
   } else {
     fb.classList.add('show', 'acv-ok');
-    fb.innerHTML = `$400K+ — all services eligible.`;
-    tsCard.classList.remove('svc-locked');
-    tsNote.style.display = 'none';
-    btn.disabled = false;
+    fb.innerHTML = `Commerce ACV eligible.`;
+    if (commerceScopePanel) commerceScopePanel.classList.remove('panel-locked');
+    lockPanelInputs(commerceScopePanel, false);
   }
 }
 
+function lockPanelInputs(panel, lock) {
+  if (!panel) return;
+  panel.querySelectorAll('input, textarea, select').forEach(el => {
+    el.disabled = lock;
+  });
+}
+
+function lockTs(tsCard) {
+  tsCard.classList.add('svc-locked');
+  if (tsCard.classList.contains('on')) {
+    tsCard.classList.remove('on');
+    tsCard.querySelector('input').checked = false;
+  }
+}
+
+// ─── Submit gate ─────────────────────────────────────────
+function evalSubmitState() {
+  const btn = document.getElementById('submit_btn');
+  const ads = hasAds();
+  const commerce = hasCommerce();
+
+  const adsValid = ads && acvAdsVal >= 200000;
+  const commerceValid = commerce && acvCommerceVal >= 100000;
+
+  // Allow submission if at least one leg is valid; block only if none are
+  const anyValid = adsValid || commerceValid;
+  btn.disabled = (ads || commerce) && !anyValid;
+}
+
+// ─── Utilities ───────────────────────────────────────────
 function pickRadio(groupId, el) {
   document.querySelectorAll('#' + groupId + ' .rcard').forEach(c => c.classList.remove('on'));
   el.classList.add('on');
-}
-
-function toggleCheck(el) {
-  el.classList.toggle('on');
-  el.querySelector('input[type=checkbox]').checked = el.classList.contains('on');
 }
 
 function toggleSvc(el) {
@@ -304,85 +566,137 @@ function getRadio(groupId) {
 
 function v(id) { const e = document.getElementById(id); return e ? e.value.trim() : ''; }
 
+// ─── Submit ───────────────────────────────────────────────
 function submitForm() {
   const client    = v('sf_client_name');
-  const acvRaw    = v('sf_acv');
   const opp       = getRadio('opp_group');
   const sfUrl     = v('sf_opp_url');
-  const spend     = v('sf_ad_spend');
-  const spendType = getRadio('spend_group');
-  const markets   = v('sf_markets');
-  const retailers = v('sf_retailers');
-  const brands    = v('sf_brands');
-  const prods     = getChecked('prod_group');
-  const svcs      = getChecked('svc_group');
   const kickoff   = v('sf_kickoff');
   const golive    = v('sf_golive');
   const peak      = v('sf_peak');
   const notes     = v('sf_notes');
+  const prods     = getChecked('prod_group');
+  const ads       = hasAds();
+  const commerce  = hasCommerce();
 
-  if (!client || !acvRaw || !opp || !sfUrl || !spend || !markets || !retailers || prods.length === 0 || svcs.length === 0 || !kickoff) {
+  // Required base fields
+  if (!client || !opp || !sfUrl || prods.length === 0 || !kickoff) {
     alert('Please complete all required fields before submitting.');
     return;
   }
 
-  if (acvVal < 200000) {
-    alert('This opportunity does not meet the $200K ACV minimum for MOB. Submission blocked.');
-    return;
+  // Ads fields
+  const acvAdsRaw    = ads ? v('sf_acv_ads') : '';
+  const spend        = ads ? v('sf_ad_spend') : '';
+  const spendType    = ads ? getRadio('spend_group') : '';
+  const marketsAds   = ads ? v('sf_markets_ads') : '';
+  const retailersAds = ads ? v('sf_retailers_ads') : '';
+  const brands       = v('sf_brands');
+  const svcs         = ads ? getChecked('svc_group') : [];
+
+  if (ads) {
+    if (!acvAdsRaw || !spend || !marketsAds || !retailersAds || svcs.length === 0) {
+      alert('Please complete all required Ads fields before submitting.');
+      return;
+    }
+    if (acvAdsVal < 200000) {
+      // Only block if Commerce isn't valid to carry the submission
+      if (!commerce || acvCommerceVal < 100000) {
+        alert('No eligible product legs to submit. Check ACV thresholds.');
+        return;
+      }
+    }
   }
 
+  // Commerce fields
+  const acvCommerceRaw    = commerce ? v('sf_acv_commerce') : '';
+  const sellerType        = commerce ? getRadio('seller_group') : '';
+  const marketsCommerce   = commerce ? v('sf_markets_commerce') : '';
+  const retailersCommerce = commerce ? v('sf_retailers_commerce') : '';
+
+  if (commerce) {
+    if (!acvCommerceRaw || !sellerType || !marketsCommerce || !retailersCommerce) {
+      alert('Please complete all required Commerce fields before submitting.');
+      return;
+    }
+    if (acvCommerceVal < 100000) {
+      if (!ads || acvAdsVal < 200000) {
+        alert('No eligible product legs to submit. Check ACV thresholds.');
+        return;
+      }
+    }
+  }
+
+  // Build email
   const subject = `MOB Pre-Discovery Intake — ${client}`;
 
-  const body =
-`ACCOUNT
--------
-Client: ${client}
-ACV: ${acvRaw}
-Opportunity type: ${opp}
-SFDC link: ${sfUrl}
+  let body = `ACCOUNT\n-------\nClient: ${client}\nOpportunity type: ${opp}\nSFDC link: ${sfUrl}\nProducts in scope: ${prods.join(', ')}`;
 
-SCOPE
------
-Estimated ad spend: ${spend} (${spendType})
-No. of markets: ${markets}
-No. of retailers: ${retailers}${brands ? '\nNo. of brands / cohorts: ' + brands : ''}
-Products in scope: ${prods.join(', ')}
-Services needed: ${svcs.join(', ')}${notes ? '\n\nNotes: ' + notes : ''}
+  if (ads && acvAdsVal >= 200000) {
+    body += `\n\nADS SCOPE\n---------`;
+    body += `\nAds ACV: ${acvAdsRaw}`;
+    body += `\nEstimated ad spend: ${spend} (${spendType})`;
+    body += `\nMarkets (Ads): ${marketsAds}`;
+    body += `\nRetailers (Ads): ${retailersAds}`;
+    if (brands) body += `\nBrands / cohorts: ${brands}`;
+    body += `\nServices needed: ${svcs.join(', ')}`;
+    body += `\nAds contacts: Gabby Clarke, Kyle Kirkwood`;
+  }
 
-TIMELINE
---------
-Expected kickoff: ${kickoff}${golive ? '\nGoal go-live: ' + golive : ''}${peak ? '\nUpcoming peak / promo: ' + peak : ''}
+  if (commerce && acvCommerceVal >= 100000) {
+    body += `\n\nCOMMERCE SCOPE\n--------------`;
+    body += `\nCommerce ACV: ${acvCommerceRaw}`;
+    body += `\nSeller type: ${sellerType}`;
+    body += `\nMarkets (Commerce): ${marketsCommerce}`;
+    body += `\nRetailers (Commerce): ${retailersCommerce}`;
+    body += `\nCommerce contacts: Clay Bleyer, Kyle Kirkwood`;
+  }
 
-Submitted: ${new Date().toLocaleString()}
+  if (notes) body += `\n\nNOTES\n-----\n${notes}`;
 
----
-Do not quote MOB pricing without Gabby or Kyle's sign-off.
-Pacvue OBCOE | Internal only`;
+  body += `\n\nTIMELINE\n--------`;
+  body += `\nExpected kickoff: ${kickoff}`;
+  if (golive) body += `\nGoal go-live: ${golive}`;
+  if (peak) body += `\nUpcoming peak / promo: ${peak}`;
+  body += `\n\nSubmitted: ${new Date().toLocaleString()}`;
+  body += `\n\n---\nDo not quote MOB pricing without Gabby or Kyle's sign-off.\nPacvue OBCOE | Internal only`;
 
   window.location.href = `mailto:managedonboarding@pacvue.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-  const confirmBody = document.getElementById('confirm_body');
-  confirmBody.innerHTML =
-    `<strong>${client}</strong> has been submitted for MOB pre-discovery review.<br><br>` +
-    `<strong>ACV:</strong> ${acvRaw} &nbsp;|&nbsp; <strong>Type:</strong> ${opp}<br>` +
-    `<strong>Ad spend:</strong> ${spend} (${spendType})<br>` +
-    `<strong>Markets:</strong> ${markets} &nbsp;|&nbsp; <strong>Retailers:</strong> ${retailers}${brands ? ' &nbsp;|&nbsp; <strong>Brands / cohorts:</strong> ' + brands : ''}<br>` +
-    `<strong>Products:</strong> ${prods.join(', ')}<br>` +
-    `<strong>Services:</strong> ${svcs.join(', ')}<br>` +
-    `<strong>Expected kickoff:</strong> ${kickoff}` +
-    (golive ? ` &nbsp;|&nbsp; <strong>Goal go-live:</strong> ${golive}` : '') +
-    (peak ? `<br><strong>Peak / promo:</strong> ${peak}` : '') +
-    `<br><strong>SFDC:</strong> <a href="${sfUrl}" target="_blank" style="color:var(--bright)">View opportunity</a>` +
-    `<br><br>Your email client should have opened with a pre-filled submission. If it did not, copy the email body below and send to <a href="mailto:managedonboarding@pacvue.com" style="color:var(--bright)">managedonboarding@pacvue.com</a> with subject: <strong>${subject}</strong>` +
-    `<br><br>OBCOE will follow up to confirm scope. Do not quote pricing without Gabby or Kyle's sign-off.` +
-    `<div class="copy-block"><div class="copy-block-head"><span class="copy-block-label">Email body</span><button class="copy-btn" id="copy_btn" onclick="copyEmail()">Copy</button></div><div class="copy-content" id="copy_content"></div></div>`;
+  // Confirmation panel
+  let html = `<strong>${client}</strong> has been submitted for MOB pre-discovery review.<br><br>`;
+  html += `<strong>Type:</strong> ${opp} &nbsp;|&nbsp; <strong>Products:</strong> ${prods.join(', ')}<br>`;
 
+  if (ads && acvAdsVal >= 200000) {
+    html += `<br><strong>— Ads</strong> <span style="font-size:11px;color:#555">(Gabby Clarke, Kyle Kirkwood)</span><br>`;
+    html += `<strong>ACV:</strong> ${acvAdsRaw} &nbsp;|&nbsp; <strong>Ad spend:</strong> ${spend} (${spendType})<br>`;
+    html += `<strong>Markets:</strong> ${marketsAds} &nbsp;|&nbsp; <strong>Retailers:</strong> ${retailersAds}`;
+    if (brands) html += ` &nbsp;|&nbsp; <strong>Brands / cohorts:</strong> ${brands}`;
+    html += `<br><strong>Services:</strong> ${svcs.join(', ')}`;
+  }
+
+  if (commerce && acvCommerceVal >= 100000) {
+    html += `<br><br><strong>— Commerce</strong> <span style="font-size:11px;color:#555">(Clay Bleyer, Kyle Kirkwood)</span><br>`;
+    html += `<strong>ACV:</strong> ${acvCommerceRaw} &nbsp;|&nbsp; <strong>Seller type:</strong> ${sellerType}<br>`;
+    html += `<strong>Markets:</strong> ${marketsCommerce} &nbsp;|&nbsp; <strong>Retailers:</strong> ${retailersCommerce}`;
+  }
+
+  html += `<br><br><strong>Expected kickoff:</strong> ${kickoff}`;
+  if (golive) html += ` &nbsp;|&nbsp; <strong>Goal go-live:</strong> ${golive}`;
+  if (peak) html += `<br><strong>Peak / promo:</strong> ${peak}`;
+  html += `<br><strong>SFDC:</strong> <a href="${sfUrl}" target="_blank" style="color:var(--bright)">View opportunity</a>`;
+  html += `<br><br>Your email client should have opened with a pre-filled submission. If it did not, copy the email body below and send to <a href="mailto:managedonboarding@pacvue.com" style="color:var(--bright)">managedonboarding@pacvue.com</a> with subject: <strong>${subject}</strong>`;
+  html += `<br><br>OBCOE will follow up to confirm scope. Do not quote pricing without Gabby or Kyle's sign-off.`;
+  html += `<div class="copy-block"><div class="copy-block-head"><span class="copy-block-label">Email body</span><button class="copy-btn" id="copy_btn" onclick="copyEmail()">Copy</button></div><div class="copy-content" id="copy_content"></div></div>`;
+
+  document.getElementById('confirm_body').innerHTML = html;
   document.getElementById('copy_content').textContent = body;
   document.getElementById('confirm_wrap').style.display = 'block';
   document.getElementById('confirm_wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
   document.getElementById('submit_btn').disabled = true;
 }
 
+// ─── Copy ────────────────────────────────────────────────
 function copyEmail() {
   const content = document.getElementById('copy_content').textContent;
   navigator.clipboard.writeText(content).then(() => {
@@ -404,16 +718,33 @@ function copyEmail() {
   });
 }
 
+// ─── Clear ───────────────────────────────────────────────
 function clearForm() {
   document.querySelectorAll('input:not([type=radio]):not([type=checkbox]), textarea').forEach(el => el.value = '');
   document.querySelectorAll('.rcard.on').forEach(el => el.classList.remove('on'));
   document.querySelectorAll('#spend_group .rcard').forEach(el => { if (el.dataset.val === 'Total') el.classList.add('on'); });
   document.querySelectorAll('.prod-card.on, .svc-card.on').forEach(el => { el.classList.remove('on'); el.querySelector('input').checked = false; });
-  acvVal = 0;
-  document.getElementById('acv_feedback').className = 'acv-feedback';
+
+  acvAdsVal = 0;
+  acvCommerceVal = 0;
+
+  ['acv_feedback_ads','acv_feedback_commerce'].forEach(id => resetFeedback(id));
   document.getElementById('ts_card').classList.add('svc-locked');
   document.getElementById('ts_note').style.display = 'block';
   document.getElementById('confirm_wrap').style.display = 'none';
   document.getElementById('submit_btn').disabled = false;
+
+  // Unlock all panels
+  document.querySelectorAll('.scope-panel.panel-locked, .acv-panel.panel-locked').forEach(p => p.classList.remove('panel-locked'));
+  document.querySelectorAll('#services_section').forEach(el => { el.style.opacity = ''; el.style.pointerEvents = ''; });
+  document.querySelectorAll('input[disabled], textarea[disabled]').forEach(el => el.disabled = false);
+
+  // Hide all conditional sections
+  ['ads_acv_section','commerce_acv_section','ads_scope_section','commerce_scope_section','services_section'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('visible');
+  });
 }
 </script>
+</body>
+</html>
